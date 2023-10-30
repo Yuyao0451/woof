@@ -6,17 +6,17 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import com.woof.promotionactivity.dao.PromotionActivityDAO;
-import com.woof.promotionactivity.dao.PromotionActivityDAOImpl;
+import com.woof.promotionactivity.dao.PromotionActivityDAO1;
+import com.woof.promotionactivity.dao.PromotionActivityDAOImpl1;
 import com.woof.promotionactivity.entity.PromotionActivity;
 import com.woof.util.HibernateUtil;
 
-public class PromotionActivityServiceImpl implements PromotionActivityService {
+public class PromotionActivityServiceImpl1 implements PromotionActivityService1 {
 
-	private PromotionActivityDAO dao;
+	private PromotionActivityDAO1 dao;
 
-	public PromotionActivityServiceImpl() {
-		dao = new PromotionActivityDAOImpl(HibernateUtil.getSessionFactory());
+	public PromotionActivityServiceImpl1() {
+		dao = new PromotionActivityDAOImpl1(HibernateUtil.getSessionFactory());
 	}
 
 //	@Override

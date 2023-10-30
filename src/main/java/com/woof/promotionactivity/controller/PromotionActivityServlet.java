@@ -1,9 +1,6 @@
 package com.woof.promotionactivity.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,17 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.woof.promotionactivity.entity.PromotionActivity;
-import com.woof.promotionactivity.service.PromotionActivityService;
-import com.woof.promotionactivity.service.PromotionActivityServiceImpl;
+import com.woof.promotionactivity.service.PromotionActivityService1;
+import com.woof.promotionactivity.service.PromotionActivityServiceImpl1;
 
 @WebServlet("/promotionactivity")
 public class PromotionActivityServlet extends HttpServlet {
 
-	private PromotionActivityService promotionActivityService;
+	private PromotionActivityService1 promotionActivityService;
 
 	@Override
 	public void init() throws ServletException {
-		promotionActivityService = new PromotionActivityServiceImpl();
+		promotionActivityService = new PromotionActivityServiceImpl1();
 	}
 
 	@Override

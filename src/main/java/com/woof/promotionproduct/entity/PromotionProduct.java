@@ -6,8 +6,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "promotion_product")
-@IdClass(PromotionProductVO.CompositeDetail.class)
-public class PromotionProductVO implements Serializable {
+@IdClass(PromotionProduct.CompositeDetail.class)
+public class PromotionProduct implements Serializable {
 	
 	@Id
 	@Column(name = "PROD_NO" , nullable = false)
@@ -26,7 +26,7 @@ public class PromotionProductVO implements Serializable {
 		this.paNo = key.getPaNo();
 	}
 
-	public PromotionProductVO() {
+	public PromotionProduct() {
 	}
 
 	public Integer getProdNo() {
@@ -45,7 +45,7 @@ public class PromotionProductVO implements Serializable {
 		this.paNo = paNo;
 	}
 	
-	static class CompositeDetail implements Serializable {
+	public static class CompositeDetail implements Serializable {
 		private static final long serialVersionUID = 1L;
 		
 		private Integer prodNo;

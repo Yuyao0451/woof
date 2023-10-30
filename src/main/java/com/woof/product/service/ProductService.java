@@ -1,7 +1,7 @@
 package com.woof.product.service;
 
-import com.woof.product.entity.Product;
 import com.woof.product.dao.ProductRepository;
+import com.woof.product.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +18,6 @@ public class ProductService {
         return repository.save(product);
     }
 
-    public List<Product> saveProducts(List<Product> products) {
-        return repository.saveAll(products);
-    }
-
     public List<Product> getProducts() {
         return repository.findAll();
     }
@@ -30,15 +26,11 @@ public class ProductService {
         return repository.findById(id);
     }
 
-    public String deleteProduct(int id) {
+    public void deleteProduct(int id) {
         repository.deleteById(id);
-        return "Product removed: " + id;
     }
 
     public Product updateProduct(Product product) {
-        Product existingProduct = repository.findById(product.getProdNo()).orElse(null);
-        existingProduct.setProdName(product.getProdName());
-        existingProduct.setProdPrice(product.getProdPrice());
-        return repository.save(existingProduct);
+        return repository.save(product);
     }
 }

@@ -1,11 +1,10 @@
 package com.woof.promotionactivity.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import com.woof.promotionactivity.entity.PromotionActivity;
 
-public interface PromotionActivityDAO {
+public interface PromotionActivityDAO1 {
 
 	int insert(PromotionActivity promotionActivity);
 

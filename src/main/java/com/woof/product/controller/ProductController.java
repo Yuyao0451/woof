@@ -4,29 +4,17 @@ import com.woof.product.entity.Product;
 import com.woof.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class ProductController {
 
     @Autowired
     private ProductService service;
 
-    @GetMapping("/test")
-    public String test() {
-        return "API is working";
-    }
-
     @PostMapping("/addProduct")
     public Product addProduct(@RequestBody Product product) {
         return service.saveProduct(product);
-    }
-
-    @PostMapping("/addProducts")
-    public List<Product> addProducts(@RequestBody List<Product> products) {
-        return service.saveProducts(products);
     }
 
     @GetMapping("/products")
@@ -45,7 +33,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable int id) {
-        return service.deleteProduct(id);
+    public void deleteProduct(@PathVariable int id) {
+        service.deleteProduct(id);
     }
 }

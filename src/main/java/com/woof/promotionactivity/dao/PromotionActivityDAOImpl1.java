@@ -8,11 +8,11 @@ import org.hibernate.SessionFactory;
 import com.woof.promotionactivity.entity.PromotionActivity;
 import com.woof.util.HibernateUtil;
 
-public class PromotionActivityDAOImpl implements PromotionActivityDAO {
+public class PromotionActivityDAOImpl1 implements PromotionActivityDAO1 {
 
 	private SessionFactory factory;
 
-	public PromotionActivityDAOImpl(SessionFactory factory) {
+	public PromotionActivityDAOImpl1(SessionFactory factory) {
 		this.factory = factory;
 	}
 

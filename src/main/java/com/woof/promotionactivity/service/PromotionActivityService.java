@@ -1,23 +1,32 @@
 package com.woof.promotionactivity.service;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.List;
-
 import com.woof.promotionactivity.entity.PromotionActivity;
+import com.woof.promotionactivity.dao.PromotionActivityRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface PromotionActivityService {
+import java.util.List;
+import java.util.Optional;
 
-//	PromotionActivity addPromotionActivity(PromotionActivity promotionActivity);
-	
-	PromotionActivity addPromotionActivity(String paName, BigDecimal paDiscount, String paContent, Timestamp paStart, Timestamp paEnd, Boolean paStatus);
+@Service
+public class PromotionActivityService {
 
-	PromotionActivity updatePromotionActivity(PromotionActivity promotionActivity);
+    @Autowired
+    private PromotionActivityRepository repository;
 
-//	void deletePromotionActivity(Integer paNo);
+    public List<PromotionActivity> getAll() {
+        return repository.findAll();
+    }
 
-	PromotionActivity findPromotionActivityByPaNo(Integer paNo);
+    public Optional<PromotionActivity> getById(Integer id) {
+        return repository.findById(id);
+    }
 
-	List<PromotionActivity> getAllPromotionActivity();
+    public PromotionActivity save(PromotionActivity promotionActivity) {
+        return repository.save(promotionActivity);
+    }
 
+    public void deleteById(Integer id) {
+        repository.deleteById(id);
+    }
 }

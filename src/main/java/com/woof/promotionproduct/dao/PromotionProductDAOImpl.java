@@ -1,6 +1,6 @@
 package com.woof.promotionproduct.dao;
 
-import com.woof.promotionproduct.entity.PromotionProductVO;
+import com.woof.promotionproduct.entity.PromotionProduct;
 import com.woof.util.Util;
 
 import java.sql.Connection;
@@ -20,7 +20,7 @@ public class PromotionProductDAOImpl implements PromotionProductDAO {
 	
 	
 	@Override
-    public void insert(PromotionProductVO promotionProductVO) {
+    public void insert(PromotionProduct promotionProductVO) {
         Connection con = null;
         PreparedStatement ps = null;
         int count = 0;
@@ -48,7 +48,7 @@ public class PromotionProductDAOImpl implements PromotionProductDAO {
     }
 
 	 @Override
-	    public void delete(PromotionProductVO promotionProductVO) {
+	    public void delete(PromotionProduct promotionProductVO) {
 	        Connection con = null;
 	        PreparedStatement ps = null;
 	        int count = 0;
@@ -75,12 +75,12 @@ public class PromotionProductDAOImpl implements PromotionProductDAO {
 	    }
 	
 	 @Override
-	    public PromotionProductVO findByProdNo(Integer prodNo) {
+	    public PromotionProduct findByProdNo(Integer prodNo) {
 
 	        Connection con = null;
 	        PreparedStatement ps = null;
 	        ResultSet rs = null;
-	        PromotionProductVO promotionProductVO = null;
+	        PromotionProduct promotionProductVO = null;
 
 	        try {
 	            con = Util.getConnection();
@@ -89,7 +89,7 @@ public class PromotionProductDAOImpl implements PromotionProductDAO {
 	            rs = ps.executeQuery();
 
 	            if (rs.next()) {
-	            	promotionProductVO = new PromotionProductVO();
+	            	promotionProductVO = new PromotionProduct();
 	            	promotionProductVO.setProdNo(prodNo);
 	            	promotionProductVO.setPaNo(rs.getInt("pa_no"));
 
@@ -104,12 +104,12 @@ public class PromotionProductDAOImpl implements PromotionProductDAO {
 	    }
 	 
 	 @Override
-	    public PromotionProductVO findByPaNo(Integer paNo) {
+	    public PromotionProduct findByPaNo(Integer paNo) {
 
 	        Connection con = null;
 	        PreparedStatement ps = null;
 	        ResultSet rs = null;
-	        PromotionProductVO promotionProductVO = null;
+	        PromotionProduct promotionProductVO = null;
 
 	        try {
 	            con = Util.getConnection();
@@ -118,7 +118,7 @@ public class PromotionProductDAOImpl implements PromotionProductDAO {
 	            rs = ps.executeQuery();
 
 	            if (rs.next()) {
-	            	promotionProductVO = new PromotionProductVO();
+	            	promotionProductVO = new PromotionProduct();
 	            	promotionProductVO.setPaNo(paNo);
 	            	promotionProductVO.setProdNo(rs.getInt("prod_no"));
 
@@ -133,13 +133,13 @@ public class PromotionProductDAOImpl implements PromotionProductDAO {
 	    }
 	
 	 @Override
-	    public List<PromotionProductVO> getAll() {
+	    public List<PromotionProduct> getAll() {
 
 	        Connection con = null;
 	        PreparedStatement ps = null;
 	        ResultSet rs = null;
 
-	        List<PromotionProductVO> promotionProductVOList = new ArrayList<>();
+	        List<PromotionProduct> promotionProductVOList = new ArrayList<>();
 
 	        try {
 	            con = Util.getConnection();
@@ -147,7 +147,7 @@ public class PromotionProductDAOImpl implements PromotionProductDAO {
 	            rs = ps.executeQuery();
 
 	            while (rs.next()) {
-	            	PromotionProductVO promotionProductVO = new PromotionProductVO();
+	            	PromotionProduct promotionProductVO = new PromotionProduct();
 	            	promotionProductVO.setProdNo(rs.getInt("prod_no"));
 	            	promotionProductVO.setPaNo(rs.getInt("pa_no"));
 	            	
@@ -198,7 +198,7 @@ public class PromotionProductDAOImpl implements PromotionProductDAO {
 // 		 }
 		 
 		 //findByPaNo查詢資料	
-		 PromotionProductVO promotionProduct = promotionProductDAO.findByPaNo(2);
+		 PromotionProduct promotionProduct = promotionProductDAO.findByPaNo(2);
  		 System.out.println(promotionProduct);
  		 }
 		 
