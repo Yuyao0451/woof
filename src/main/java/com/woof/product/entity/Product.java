@@ -2,15 +2,33 @@ package com.woof.product.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.*;
 
+@Entity
+@Table(name="product")
 public class Product implements Serializable {
-	private Integer prodNo; 		//商品編號
-	private Integer prodCatNo;  	//商品類別編號
-	private String prodContent; 	//商品描述
-	private Integer prodPrice;  	//商品價格
-	private String prodName; 		//商品名稱
-	private Boolean prodStatus; 	//商品狀態 0:下架 1:上架
-	private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="PROD_NO", updatable = false) //商品編號
+    private Integer prodNo;
+
+    @Column(name="PROD_CAT_NO") //商品類別編號
+    private Integer prodCatNo;
+
+    @Column(name="PROD_CONTENT") //商品描述
+    private String prodContent;
+
+    @Column(name="PROD_PRICE") //商品價格
+    private Integer prodPrice;
+
+    @Column(name="PROD_NAME") //商品名稱
+    private String prodName;
+
+    @Column(name="PROD_STATUS") //商品狀態 0:下架 1:上架
+    private Boolean prodStatus;
 
 	public Product() {
 	}
