@@ -101,5 +101,19 @@ public class ProductService {
         return products.map(this::convertToDto);
     }
 
+    public ProductDto toggleProductStatus(int prodNo) {
+        Optional<Product> productOptional = repository.findById(prodNo);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            if (product.getProdStatus() == ProductStatus.ON_SHELF) {
+                product.setProdStatus(ProductStatus.OFF_SHELF);
+            } else {
+                product.setProdStatus(ProductStatus.ON_SHELF);
+            }
+            Product updatedProduct = repository.save(product);
+            return convertToDto(updatedProduct);
+        }
+        return null;
+    }
 
 }

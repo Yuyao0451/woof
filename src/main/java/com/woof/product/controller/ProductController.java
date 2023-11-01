@@ -63,4 +63,15 @@ public class ProductController {
         return service.getProductStatuses();
     }
 
+
+    @PutMapping("/toggleStatus/{prodNo}")
+    public ResponseEntity<ProductDto> toggleProductStatus(@PathVariable int prodNo) {
+        ProductDto productDto = service.toggleProductStatus(prodNo);
+        if (productDto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(productDto, HttpStatus.OK);
+    }
+
+
 }
