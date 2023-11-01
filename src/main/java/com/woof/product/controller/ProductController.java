@@ -4,9 +4,12 @@ import com.woof.product.entity.Product;
 import com.woof.product.service.ProductDto;
 import com.woof.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -32,6 +35,11 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(productDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/productsPaged")//分頁
+    public Page<ProductDto> findAllProductsPaged(Pageable pageable) {
+        return service.getProductsPaged(pageable);
     }
 
 

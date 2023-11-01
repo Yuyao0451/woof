@@ -1,6 +1,9 @@
 package com.woof.product.entity;
 
+import com.woof.productphoto.entity.ProductPhoto;
+
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
 
@@ -32,6 +35,9 @@ public class Product implements Serializable {
 	@Column(name="PROD_STATUS", nullable = false) //商品狀態 0:下架 1:上架
 	@Enumerated(EnumType.ORDINAL)
 	private ProductStatus prodStatus;
+
+	@OneToMany(mappedBy = "prodNo", fetch = FetchType.LAZY)
+	private List<ProductPhoto> productPhotos;
 
 	public Integer getProdNo() {
 		return prodNo;

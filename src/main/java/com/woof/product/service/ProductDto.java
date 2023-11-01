@@ -1,5 +1,7 @@
 package com.woof.product.service;
 
+import java.util.List;
+
 public class ProductDto {
     private Integer prodNo;
     private String prodCatName;
@@ -7,6 +9,9 @@ public class ProductDto {
     private Integer prodPrice;
     private String prodName;
     private String prodStatus;
+    private List<byte[]> productPhotos;
+    private List<String> base64ProductPhotos;
+
 
     public Integer getProdNo() {
         return prodNo;
@@ -56,4 +61,19 @@ public class ProductDto {
         this.prodStatus = prodStatus;
     }
 
+    public List<byte[]> getProductPhotos() {
+        return productPhotos;
+    }
+
+    public void setProductPhotos(List<byte[]> productPhotos) {
+        this.productPhotos = productPhotos;
+    }
+
+    public List<String> getBase64ProductPhotos() {
+        return base64ProductPhotos;
+    }
+
+    public void setBase64ProductPhotos(List<String> base64ProductPhotos) {
+        this.base64ProductPhotos = base64ProductPhotos;
+    }
 }

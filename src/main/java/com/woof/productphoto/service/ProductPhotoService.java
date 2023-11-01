@@ -18,8 +18,8 @@ public class ProductPhotoService {
         return repository.findAll();
     }
 
-    public Optional<ProductPhoto> getById(Integer id) {
-        return repository.findById(id);
+    public List<ProductPhoto> getProductPhotosByProdNo(Integer prodNo) {
+        return repository.findByProdNo(prodNo);
     }
 
     public ProductPhoto save(ProductPhoto productPhoto) {

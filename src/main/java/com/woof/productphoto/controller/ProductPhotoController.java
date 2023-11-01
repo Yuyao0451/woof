@@ -9,36 +9,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/product-photos")
 public class ProductPhotoController {
 
     @Autowired
     private ProductPhotoService service;
 
-    @GetMapping
+    @GetMapping("/productPhotos")
     public List<ProductPhoto> getAll() {
         return service.getAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductPhoto> getById(@PathVariable Integer id) {
-        return service.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @GetMapping("/productPhotos/{prodNo}")
+    public List<ProductPhoto> findPhotosByProdNo(@PathVariable Integer prodNo) {
+        return service.getProductPhotosByProdNo(prodNo);
     }
 
-    @PostMapping
+    @PostMapping("/addPhoto/{id}")
     public ProductPhoto create(@RequestBody ProductPhoto productPhoto) {
         return service.save(productPhoto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/updatePhoto/{id}")
     public ProductPhoto update(@PathVariable Integer id, @RequestBody ProductPhoto productPhoto) {
         productPhoto.setProdPhotoNo(id);
         return service.save(productPhoto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletePhoto/{id}")
     public void delete(@PathVariable Integer id) {
         service.deleteById(id);
     }
