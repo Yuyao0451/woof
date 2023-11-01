@@ -75,7 +75,7 @@ public class ProductPhoto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ProductPhotoVO [prodPhotoNo=" + prodPhotoNo + ", prodNo=" + prodNo + ", prodPhoto="
+		return "ProductPhoto [prodPhotoNo=" + prodPhotoNo + ", prodNo=" + prodNo + ", prodPhoto="
 				+ Arrays.toString(prodPhoto) + "]";
 	}
 }

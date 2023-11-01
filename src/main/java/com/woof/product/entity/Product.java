@@ -8,30 +8,30 @@ import javax.persistence.*;
 @Table(name="product")
 public class Product implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="PROD_NO", updatable = false) //商品編號
-    private Integer prodNo;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="PROD_NO", updatable = false) //商品編號
+	private Integer prodNo;
 
-    @Column(name="PROD_CAT_NO") //商品類別編號
-    private Integer prodCatNo;
+	@Column(name="PROD_CAT_NAME", nullable = false) //商品類別名稱
+	@Enumerated(EnumType.STRING)
+	private ProductCategory prodCatName;
 
-    @Column(name="PROD_CONTENT") //商品描述
-    private String prodContent;
 
-    @Column(name="PROD_PRICE") //商品價格
-    private Integer prodPrice;
+	@Column(name="PROD_CONTENT", length = 300, nullable = false) //商品描述
+	private String prodContent;
 
-    @Column(name="PROD_NAME") //商品名稱
-    private String prodName;
+	@Column(name="PROD_PRICE", nullable = false) //商品價格
+	private Integer prodPrice;
 
-    @Column(name="PROD_STATUS") //商品狀態 0:下架 1:上架
-    private Boolean prodStatus;
+	@Column(name="PROD_NAME", length = 30, nullable = false) //商品名稱
+	private String prodName;
 
-	public Product() {
-	}
+	@Column(name="PROD_STATUS", nullable = false) //商品狀態 0:下架 1:上架
+	@Enumerated(EnumType.ORDINAL)
+	private ProductStatus prodStatus;
 
 	public Integer getProdNo() {
 		return prodNo;
@@ -41,12 +41,12 @@ public class Product implements Serializable {
 		this.prodNo = prodNo;
 	}
 
-	public Integer getProdCatNo() {
-		return prodCatNo;
+	public ProductCategory getProdCatName() {
+		return prodCatName;
 	}
 
-	public void setProdCatNo(Integer prodCatNo) {
-		this.prodCatNo = prodCatNo;
+	public void setProdCatName(ProductCategory prodCatName) {
+		this.prodCatName = prodCatName;
 	}
 
 	public String getProdContent() {
@@ -73,37 +73,24 @@ public class Product implements Serializable {
 		this.prodName = prodName;
 	}
 
-	public Boolean getProdStatus() {
+	public ProductStatus getProdStatus() {
 		return prodStatus;
 	}
 
-	public void setProdStatus(Boolean prodStatus) {
+	public void setProdStatus(ProductStatus prodStatus) {
 		this.prodStatus = prodStatus;
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Product product = (Product) o;
+		return Objects.equals(prodNo, product.prodNo) && prodCatName == product.prodCatName && Objects.equals(prodContent, product.prodContent) && Objects.equals(prodPrice, product.prodPrice) && Objects.equals(prodName, product.prodName) && prodStatus == product.prodStatus;
+	}
+
+	@Override
 	public int hashCode() {
-		return Objects.hash(prodCatNo, prodContent, prodName, prodNo, prodPrice, prodStatus);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Product other = (Product) obj;
-		return Objects.equals(prodCatNo, other.prodCatNo) && Objects.equals(prodContent, other.prodContent)
-				&& Objects.equals(prodName, other.prodName) && Objects.equals(prodNo, other.prodNo)
-				&& Objects.equals(prodPrice, other.prodPrice) && Objects.equals(prodStatus, other.prodStatus);
-	}
-
-	@Override
-	public String toString() {
-		return "ProductVO [prodNo=" + prodNo + ", prodCatNo=" + prodCatNo + ", prodContent=" + prodContent
-				+ ", prodPrice=" + prodPrice + ", prodName=" + prodName + ", prodStatus=" + prodStatus + "]";
+		return Objects.hash(prodNo, prodCatName, prodContent, prodPrice, prodName, prodStatus);
 	}
 }
-

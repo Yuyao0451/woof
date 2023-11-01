@@ -1,8 +1,11 @@
 package com.woof.product.controller;
 
 import com.woof.product.entity.Product;
+import com.woof.product.service.ProductDto;
 import com.woof.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -13,27 +16,43 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping("/addProduct")
-    public Product addProduct(@RequestBody Product product) {
+    public ProductDto addProduct(@RequestBody Product product) {
         return service.saveProduct(product);
     }
 
     @GetMapping("/products")
-    public List<Product> findAllProducts() {
+    public List<ProductDto> findAllProducts() {
         return service.getProducts();
     }
 
-    @GetMapping("/productById/{id}")
-    public Product findProductById(@PathVariable int id) {
-        return service.getProductById(id).orElse(null);
+    @GetMapping("/productById/{prodNo}")
+    public ResponseEntity<ProductDto> findProductById(@PathVariable int prodNo) {
+        ProductDto productDto = service.getProductById(prodNo);
+        if (productDto == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
+
     @PutMapping("/update")
-    public Product updateProduct(@RequestBody Product product) {
+    public ProductDto updateProduct(@RequestBody Product product) {
         return service.updateProduct(product);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteProduct(@PathVariable int id) {
-        service.deleteProduct(id);
+    @DeleteMapping("/delete/{prodNo}")
+    public void deleteProduct(@PathVariable int prodNo) {
+        service.deleteProduct(prodNo);
     }
+
+    @GetMapping("/productCategories")
+    public List<String> getProductCategories() {
+        return service.getProductCategories();
+    }
+
+    @GetMapping("/productStatuses")
+    public List<String> getProductStatuses() {
+        return service.getProductStatuses();
+    }
+
 }

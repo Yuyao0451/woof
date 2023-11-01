@@ -150,7 +150,7 @@ public class ReturnList implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ReturnListVO [reExchId=" + reExchId + ", shopOrderNo=" + shopOrderNo + ", prodNo=" + prodNo
+		return "ReturnList [reExchId=" + reExchId + ", shopOrderNo=" + shopOrderNo + ", prodNo=" + prodNo
 				+ ", reReason=" + reReason + ", reStatus=" + reStatus + ", reDate=" + reDate + ", procDate=" + procDate
 				+ ", repayStatus=" + repayStatus + ", redAmount=" + redAmount + ", rePayAmount=" + rePayAmount + "]";
 	}

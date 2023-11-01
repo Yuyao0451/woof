@@ -105,7 +105,7 @@ public class PromotionActivity {
 	}
 	@Override
 	public String toString() {
-		return "PromotionActivityVO [paNo=" + paNo + ", paName=" + paName + ", paDiscount=" + paDiscount
+		return "PromotionActivity [paNo=" + paNo + ", paName=" + paName + ", paDiscount=" + paDiscount
 				+ ", paContent=" + paContent + ", paStart=" + paStart + ", paEnd=" + paEnd + ", paStatus=" + paStatus
 				+ "]";
 	}
