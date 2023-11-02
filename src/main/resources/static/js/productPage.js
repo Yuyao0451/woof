@@ -109,7 +109,29 @@ document.getElementById("deactivateProduct").addEventListener("click", function 
             }
         }
     });
-
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    // 當新增按鈕被點擊時，顯示模態框
+    document.getElementById('addProduct').addEventListener('click', function () {
+        $('#addProductModal').modal('show');
+    });
+
+    // 處理表單提交
+    document.getElementById('saveProduct').addEventListener('click', function () {
+        var form = document.getElementById('addProductForm');
+        if (form.checkValidity()) {
+            // 在這裡添加你的代碼來處理表單數據
+            // 例如，使用AJAX將數據發送到服務器
+
+            // 隱藏模態框
+            $('#addProductModal').modal('hide');
+        } else {
+            // 如果表單不合法，顯示錯誤信息
+            form.classList.add('was-validated');
+        }
+    });
+});
+
 
 

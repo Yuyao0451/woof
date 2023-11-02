@@ -38,24 +38,35 @@
         <tr th:each="product : ${products}" class="product-row">
             <td><input type="checkbox" th:value="${product.prodNo}" class="product-checkbox"></td>
             <td th:text="${product.prodNo}"></td>
-            <!--            <td><img src="data:image/png;base64,${product.base64ProductPhotos[0]}" alt="Product Photo"></td>-->
+            <!--<td><img src="data:image/png;base64,${product.base64ProductPhotos[0]}" alt="Product Photo"></td>-->
             <td th:text="${product.prodCatName}"></td>
             <td th:text="${product.prodName}"></td>
             <td th:text="${product.prodContent}"></td>
             <td th:text="${product.prodPrice}"></td>
             <td th:class="${product.prodStatus == '上架' ? 'btn-warning' : 'text-success'}"
                 th:text="${product.prodStatus}"></td>
-
-
         </tr>
         </tbody>
     </table>
+
+
     <div id="paginationControls">
         <button id="prevPage">上一頁</button>
         <span id="currentPage"></span> / <span id="totalPages"></span>
         <button id="nextPage">下一頁</button>
     </div>
 </div>
+
+
+
+<div th:insert="modal :: addProductModal"></div>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="/js/productPage.js"></script>
 </body>
 </html>
