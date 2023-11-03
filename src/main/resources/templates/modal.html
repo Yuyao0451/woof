@@ -15,17 +15,22 @@
                         <!-- 商品類別 -->
                         <div class="form-group">
                             <label for="productCategory">商品類別</label>
-                            <input type="text" class="form-control" id="productCategory" required>
+                            <select class="form-control" id="productCategory" required>
+                                <option value="類別1">類別1</option>
+                                <option value="類別2">類別2</option>
+                                <!-- 其他選項... -->
+                            </select>
                         </div>
                         <!-- 商品名稱 -->
                         <div class="form-group">
                             <label for="productName">商品名稱</label>
-                            <input type="text" class="form-control" id="productName" required>
+                            <input type="text" class="form-control" id="productName" maxlength="30" required>
+                            <small id="productNameHelp" class="form-text text-muted">最多可輸入30個字</small>
                         </div>
                         <!-- 商品價錢 -->
                         <div class="form-group">
-                            <label for="productPrice">商品價錢</label>
-                            <input type="number" class="form-control" id="productPrice" required>
+                            <label for="productPrice">商品價格</label>
+                            <input type="number" class="form-control" id="productPrice" min="0" max="999999" required>
                         </div>
                         <!-- 商品照片 -->
                         <div class="form-group">
@@ -35,7 +40,8 @@
                         <!-- 商品敘述 -->
                         <div class="form-group">
                             <label for="productDescription">商品敘述</label>
-                            <textarea class="form-control" id="productDescription" rows="3"></textarea>
+                            <textarea class="form-control" id="productDescription" rows="3" maxlength="300"></textarea>
+                            <small id="productDescriptionHelp" class="form-text text-muted">最多可輸入300個字</small>
                         </div>
                         <!-- 上下架狀態 -->
                         <div class="form-group">
