@@ -10,7 +10,6 @@ public class ProductDto {
     private String prodName;
     private String prodStatus;
     private List<byte[]> productPhotos;
-    private List<String> base64ProductPhotos;
 
 
     public Integer getProdNo() {
@@ -67,13 +66,5 @@ public class ProductDto {
 
     public void setProductPhotos(List<byte[]> productPhotos) {
         this.productPhotos = productPhotos;
-    }
-
-    public List<String> getBase64ProductPhotos() {
-        return base64ProductPhotos;
-    }
-
-    public void setBase64ProductPhotos(List<String> base64ProductPhotos) {
-        this.base64ProductPhotos = base64ProductPhotos;
     }
 }

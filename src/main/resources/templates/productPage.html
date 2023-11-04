@@ -8,25 +8,25 @@
 <body>
 
 <div class="container mt-5">
-    <h1>商品管理</h1>
-    <div class="row mb-3">
-        <div class="col">
-            <button id="addProduct" class="btn btn-info">新增商品</button>
-            <button id="editProduct" class="btn btn-info">修改商品</button>
-            <!-- <button id="deleteProduct" class="btn btn-danger">刪除商品</button> -->
-        </div>
-        <div class="col text-right">
-            <button id="activateProduct" class="btn btn-success">上架</button>
-            <button id="deactivateProduct" class="btn btn-danger">下架</button>
-        </div>
+<h1>商品管理</h1>
+<div class="row mb-3">
+    <div class="col">
+        <button id="addProduct" class="btn btn-info">新增商品</button>
+        <button id="editProduct" class="btn btn-info">修改商品</button>
+        <!-- <button id="deleteProduct" class="btn btn-danger">刪除商品</button> -->
     </div>
+    <div class="col text-right">
+        <button id="activateProduct" class="btn btn-success">上架</button>
+        <button id="deactivateProduct" class="btn btn-danger">下架</button>
+    </div>
+</div>
 
     <table class="table table-bordered mt-3">
         <thead>
         <tr>
             <th><input type="checkbox" id="selectAll"></th>
             <th>商品編號</th>
-            <!--            <th>商品照片</th>-->
+            <th>商品照片</th>
             <th>商品類別</th>
             <th>商品名稱</th>
             <th>商品描述</th>
@@ -35,20 +35,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="product : ${products}" class="product-row">
+        <tr th:each="product : ${products}" class="product-row" >
             <td><input type="checkbox" th:value="${product.prodNo}" class="product-checkbox"></td>
             <td th:text="${product.prodNo}"></td>
-            <!--<td><img src="data:image/png;base64,${product.base64ProductPhotos[0]}" alt="Product Photo"></td>-->
+            <td><img th:src="@{/productImage/{prodNo}(prodNo=${product.prodNo})}" alt="Product Photo" style="width: 100px; height: 100px;"></td>
             <td th:text="${product.prodCatName}"></td>
             <td th:text="${product.prodName}"></td>
             <td th:text="${product.prodContent}"></td>
             <td th:text="${product.prodPrice}"></td>
-            <td th:class="${product.prodStatus == '上架' ? 'btn-warning' : 'text-success'}"
-                th:text="${product.prodStatus}"></td>
+            <td th:class="${product.prodStatus == '上架' ? 'text-danger' : 'text-success'}" th:text="${product.prodStatus}"></td>
         </tr>
         </tbody>
     </table>
-
 
     <div id="paginationControls">
         <button id="prevPage">上一頁</button>
@@ -57,12 +55,7 @@
     </div>
 </div>
 
-
-
 <div th:insert="modal :: addProductModal"></div>
-
-
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

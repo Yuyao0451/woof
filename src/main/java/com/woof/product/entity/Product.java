@@ -1,8 +1,8 @@
 package com.woof.product.entity;
 
-import com.woof.productphoto.entity.ProductPhoto;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
@@ -36,8 +36,9 @@ public class Product implements Serializable {
 	@Enumerated(EnumType.ORDINAL)
 	private ProductStatus prodStatus;
 
-	@OneToMany(mappedBy = "prodNo", fetch = FetchType.LAZY)
-	private List<ProductPhoto> productPhotos;
+	@Lob
+	@Column(name="PROD_PHOTO") //商品照片
+	private byte[] prodPhoto;
 
 	public Integer getProdNo() {
 		return prodNo;
@@ -87,16 +88,40 @@ public class Product implements Serializable {
 		this.prodStatus = prodStatus;
 	}
 
+	public byte[] getProdPhoto() {
+		return prodPhoto;
+	}
+
+	public void setProdPhoto(byte[] prodPhoto) {
+		this.prodPhoto = prodPhoto;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Product product = (Product) o;
-		return Objects.equals(prodNo, product.prodNo) && prodCatName == product.prodCatName && Objects.equals(prodContent, product.prodContent) && Objects.equals(prodPrice, product.prodPrice) && Objects.equals(prodName, product.prodName) && prodStatus == product.prodStatus;
+		return Objects.equals(prodNo, product.prodNo) && prodCatName == product.prodCatName && Objects.equals(prodContent, product.prodContent) && Objects.equals(prodPrice, product.prodPrice) && Objects.equals(prodName, product.prodName) && prodStatus == product.prodStatus && Arrays.equals(prodPhoto, product.prodPhoto);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(prodNo, prodCatName, prodContent, prodPrice, prodName, prodStatus);
+		int result = Objects.hash(prodNo, prodCatName, prodContent, prodPrice, prodName, prodStatus);
+		result = 31 * result + Arrays.hashCode(prodPhoto);
+		return result;
 	}
+
+	@Override
+	public String toString() {
+		String photoDesc = (prodPhoto != null) ? "Photo Size: " + prodPhoto.length + " bytes" : "No Photo";
+		return "Product{" +
+				"prodNo=" + prodNo +
+				", prodCatName=" + prodCatName +
+				", prodContent='" + prodContent + '\'' +
+				", prodPrice=" + prodPrice +
+				", prodName='" + prodName + '\'' +
+				", prodStatus=" + prodStatus +
+				", " + photoDesc +
+				'}';
+	}//照片是二進制 怕會印出大量數據 更改成只印出長度
 }

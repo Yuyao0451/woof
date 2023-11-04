@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,19 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(productDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/productImage/{prodNo}")
+    public ResponseEntity<byte[]> getProductImage(@PathVariable int prodNo) {
+        byte[] imageBytes = service.getProductImage(prodNo);
+        if (imageBytes != null) {
+            return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.IMAGE_PNG) // 根據圖片實際類型設定
+                    .body(imageBytes);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/productsPaged")//分頁
