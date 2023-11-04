@@ -54,6 +54,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 加載最新的產品數據
     fetchProductsAndUpdateTable();
+
+    // 當模態框打開時，加載商品類別
+    document.getElementById('addProduct').addEventListener('click', function () {
+        fetch('/productCategories')
+            .then(response => response.json())
+            .then(categories => {
+                const categorySelect = document.getElementById('productCategory');
+                // 清空現有的選項
+                categorySelect.innerHTML = '';
+                // 動態添加新的選項到下拉選單
+                categories.forEach(category => {
+                    let option = new Option(category, category);
+                    categorySelect.add(option);
+                });
+            })
+            .catch(error => {
+                console.error('無法加載商品類別', error);
+            });
+    });
 });
 
 // 從後端API獲取產品數據並更新表格的函數
@@ -100,7 +119,7 @@ document.getElementById("deactivateProduct").addEventListener("click", function 
 function toggleProductStatus(status) {
     // 獲取選中的商品ID
     let selectedProdNos = getSelectedProdNos();
-    // 發送AJAX請求到後端
+    // 發送請求到後端
     selectedProdNos.forEach(prodNo => {
         fetch(`/toggleStatus/${prodNo}`, {
             method: 'PUT'
