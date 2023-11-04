@@ -22,7 +22,7 @@ public class ProductDto {
     @NotBlank(message = "商品狀態不能為空")
     private String prodStatus;
 
-    private List<byte[]> productPhotos;
+    private byte[] prodPhoto;
 
 
     public Integer getProdNo() {
@@ -73,11 +73,11 @@ public class ProductDto {
         this.prodStatus = prodStatus;
     }
 
-    public List<byte[]> getProductPhotos() {
-        return productPhotos;
+    public byte[] getProdPhoto() {
+        return prodPhoto;
     }
 
-    public void setProductPhotos(List<byte[]> productPhotos) {
-        this.productPhotos = productPhotos;
+    public void setProdPhoto(byte[] prodPhoto) {
+        this.prodPhoto = prodPhoto;
     }
 }

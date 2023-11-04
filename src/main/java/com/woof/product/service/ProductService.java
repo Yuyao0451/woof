@@ -41,12 +41,11 @@ public class ProductService {
         product.setProdPrice(productDto.getProdPrice());
         product.setProdName(productDto.getProdName());
         product.setProdStatus(getStatusByName(productDto.getProdStatus()));
-        if (productDto.getProductPhotos() != null && !productDto.getProductPhotos().isEmpty()) {
-            product.setProdPhoto(productDto.getProductPhotos().get(0));
-        }
+        product.setProdPhoto(productDto.getProdPhoto());
         return product;
     }
 
+    //使用displayname獲得enum值
     private ProductCategory getCategoryByName(String displayName) {
         return Arrays.stream(ProductCategory.values())
                 .filter(category -> category.getDisplayName().equals(displayName))
@@ -54,6 +53,7 @@ public class ProductService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category name"));
     }
 
+    //使用displayname獲得enum值
     private ProductStatus getStatusByName(String displayName) {
         return Arrays.stream(ProductStatus.values())
                 .filter(status -> status.getDisplayName().equals(displayName))
@@ -106,9 +106,7 @@ public class ProductService {
         dto.setProdName(product.getProdName());
         dto.setProdStatus(product.getProdStatus().getDisplayName());
         // 直接使用二進制數據
-        if (product.getProdPhoto() != null) {
-            dto.setProductPhotos(List.of(product.getProdPhoto()));
-        }
+        dto.setProdPhoto(product.getProdPhoto());
         return dto;
     }
 
