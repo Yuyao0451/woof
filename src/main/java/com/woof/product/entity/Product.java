@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="product")
@@ -21,13 +23,15 @@ public class Product implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private ProductCategory prodCatName;
 
-
+	@NotBlank(message = "商品描述不能為空")
 	@Column(name="PROD_CONTENT", length = 300, nullable = false) //商品描述
 	private String prodContent;
 
+	@NotNull(message = "商品價格為必填")
 	@Column(name="PROD_PRICE", nullable = false) //商品價格
 	private Integer prodPrice;
 
+	@NotBlank(message = "商品名稱為必填")
 	@Column(name="PROD_NAME", length = 30, nullable = false) //商品名稱
 	private String prodName;
 
