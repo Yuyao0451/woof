@@ -21,7 +21,8 @@ public class ProductService {
     private ProductRepository repository;
 
 
-    public ProductDto saveProduct(Product product) {
+    public ProductDto saveProduct(ProductDto productDto) {
+        Product product = convertToEntity(productDto);
         Product savedProduct = repository.save(product);
         return convertToDto(savedProduct);
     }
@@ -31,6 +32,33 @@ public class ProductService {
         Optional<Product> productOptional = repository.findById(prodNo);
         ProductDto dto = productOptional.map(this::convertToDto).orElse(null);
         return dto;
+    }
+
+    private Product convertToEntity(ProductDto productDto) {
+        Product product = new Product();
+        product.setProdCatName(getCategoryByName(productDto.getProdCatName()));
+        product.setProdContent(productDto.getProdContent());
+        product.setProdPrice(productDto.getProdPrice());
+        product.setProdName(productDto.getProdName());
+        product.setProdStatus(getStatusByName(productDto.getProdStatus()));
+        if (productDto.getProductPhotos() != null && !productDto.getProductPhotos().isEmpty()) {
+            product.setProdPhoto(productDto.getProductPhotos().get(0));
+        }
+        return product;
+    }
+
+    private ProductCategory getCategoryByName(String displayName) {
+        return Arrays.stream(ProductCategory.values())
+                .filter(category -> category.getDisplayName().equals(displayName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid category name"));
+    }
+
+    private ProductStatus getStatusByName(String displayName) {
+        return Arrays.stream(ProductStatus.values())
+                .filter(status -> status.getDisplayName().equals(displayName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid status name"));
     }
 
 

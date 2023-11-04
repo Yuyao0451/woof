@@ -21,8 +21,9 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping("/addProduct")
-    public ProductDto addProduct(@Valid @RequestBody Product product) {
-        return service.saveProduct(product);
+    public ResponseEntity<ProductDto> addProduct(@Valid @RequestBody ProductDto productDto) {
+        ProductDto savedProductDto = service.saveProduct(productDto);
+        return new ResponseEntity<>(savedProductDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/products")
@@ -59,8 +60,9 @@ public class ProductController {
 
 
     @PutMapping("/update")
-    public ProductDto updateProduct(@RequestBody Product product) {
-        return service.updateProduct(product);
+    public ResponseEntity<ProductDto> updateProduct(@Valid @RequestBody ProductDto productDto) {
+        ProductDto updatedProductDto = service.saveProduct(productDto);
+        return ResponseEntity.ok(updatedProductDto);
     }
 
     @DeleteMapping("/delete/{prodNo}")
