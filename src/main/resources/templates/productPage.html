@@ -8,18 +8,18 @@
 <body>
 
 <div class="container mt-5">
-<h1>商品管理</h1>
-<div class="row mb-3">
-    <div class="col">
-        <button id="addProduct" class="btn btn-info">新增商品</button>
-        <button id="editProduct" class="btn btn-info">修改商品</button>
-        <!-- <button id="deleteProduct" class="btn btn-danger">刪除商品</button> -->
+    <h1>商品管理</h1>
+    <div class="row mb-3">
+        <div class="col">
+            <button id="addProduct" class="btn btn-info">新增商品</button>
+            <button id="editProduct" class="btn btn-info">修改商品</button>
+            <!-- <button id="deleteProduct" class="btn btn-danger">刪除商品</button> -->
+        </div>
+        <div class="col text-right">
+            <button id="activateProduct" class="btn btn-success">上架</button>
+            <button id="deactivateProduct" class="btn btn-danger">下架</button>
+        </div>
     </div>
-    <div class="col text-right">
-        <button id="activateProduct" class="btn btn-success">上架</button>
-        <button id="deactivateProduct" class="btn btn-danger">下架</button>
-    </div>
-</div>
 
     <table class="table table-bordered mt-3">
         <thead>
@@ -35,15 +35,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="product : ${products}" class="product-row" >
+        <tr th:each="product : ${products}" class="product-row">
             <td><input type="checkbox" th:value="${product.prodNo}" class="product-checkbox"></td>
             <td th:text="${product.prodNo}"></td>
-            <td><img th:src="@{/productImage/{prodNo}(prodNo=${product.prodNo})}" alt="Product Photo" style="width: 100px; height: 100px;"></td>
+            <td><img th:src="@{/productImage/{prodNo}(prodNo=${product.prodNo})}" alt="Product Photo"
+                     style="width: 100px; height: 100px;"></td>
             <td th:text="${product.prodCatName}"></td>
             <td th:text="${product.prodName}"></td>
             <td th:text="${product.prodContent}"></td>
             <td th:text="${product.prodPrice}"></td>
-            <td th:class="${product.prodStatus == '上架' ? 'text-danger' : 'text-success'}" th:text="${product.prodStatus}"></td>
+            <td th:class="${product.prodStatus == '上架' ? 'text-danger' : 'text-success'}"
+                th:text="${product.prodStatus}"></td>
         </tr>
         </tbody>
     </table>
@@ -61,5 +63,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="/js/productPage.js"></script>
+<script src="/js/pagination.js"></script>
+<script src="/js/productStatus.js"></script>
+<script src="/js/selectAllCheckbox.js"></script>
+<script src="/js/modal.js"></script>
+
 </body>
 </html>

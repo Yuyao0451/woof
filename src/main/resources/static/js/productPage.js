@@ -1,170 +1,45 @@
-
+// 當文檔加載完成後，執行內部的函數
 document.addEventListener('DOMContentLoaded', function () {
-    // 分頁功能的變數
-    const rowsPerPage = 5; // 每頁顯示的行數
-    let currentPage = 1; // 當前頁碼
-
-    // 獲取全選復選框元素
-    const selectAllCheckbox = document.getElementById("selectAll");
-    // 為全選復選框添加點擊事件
-    selectAllCheckbox.addEventListener("click", function () {
-        // 獲取所有商品的復選框元素
-        const checkboxes = document.querySelectorAll(".product-checkbox");
-        // 根據全選復選框的狀態來設置所有商品復選框的狀態
-        checkboxes.forEach((checkbox) => {
-            checkbox.checked = selectAllCheckbox.checked;
-        });
-    });
-
-    // 更新表格的函數
-    function updateTable() {
-        const tableRows = document.querySelectorAll('.product-row');
-        const totalPages = Math.ceil(tableRows.length / rowsPerPage);
-        // 隱藏所有行
-        tableRows.forEach(row => row.style.display = 'none');
-        // 只顯示當前頁的行
-        for (let i = (currentPage - 1) * rowsPerPage; i < currentPage * rowsPerPage; i++) {
-            if (tableRows[i]) {
-                tableRows[i].style.display = '';
-            }
-        }
-        // 更新分頁控制項
-        document.getElementById('currentPage').textContent = currentPage;
-        document.getElementById('totalPages').textContent = totalPages;
-    }
-
-    // 初始化表格
-    updateTable();
-
-    // 為分頁控制項添加事件監聽器
-    document.getElementById('prevPage').addEventListener('click', function () {
-        if (currentPage > 1) {
-            currentPage--;
-            updateTable();
-        }
-    });
-
-    document.getElementById('nextPage').addEventListener('click', function () {
-        const totalPages = Math.ceil(document.querySelectorAll('.product-row').length / rowsPerPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            updateTable();
-        }
-    });
-
-    // 加載最新的產品數據
+    // 呼叫函數以加載最新的產品數據並更新表格
     fetchProductsAndUpdateTable();
-
-    // 當模態框打開時，加載商品類別
-    document.getElementById('addProduct').addEventListener('click', function () {
-        fetch('/productCategories')
-            .then(response => response.json())
-            .then(categories => {
-                const categorySelect = document.getElementById('productCategory');
-                // 清空現有的選項
-                categorySelect.innerHTML = '';
-                // 動態添加新的選項到下拉選單
-                categories.forEach(category => {
-                    let option = new Option(category, category);
-                    categorySelect.add(option);
-                });
-            })
-            .catch(error => {
-                console.error('無法加載商品類別', error);
-            });
-    });
 });
 
-// 從後端API獲取產品數據並更新表格的函數
+// 定義從後端API獲取產品數據並更新表格的函數
 function fetchProductsAndUpdateTable() {
-    fetch('/products') // 這裡的路徑應該是您的後端API路徑
-        .then(response => response.json())
+    // 使用fetch API從'/products'路徑獲取產品數據
+    fetch('/products')
+        .then(response => response.json()) // 將響應轉換為JSON
         .then(products => {
+            // 遍歷產品數據，為每個產品更新表格行
             products.forEach(product => {
-                updateProductRow(product); // 假設您有這樣的函數可以更新行
+                updateProductRow(product);
             });
-            // 在獲取數據並更新行之後，可能需要重新計算分頁
+            // 數據更新後重新計算分頁
             updateTable();
         });
 }
 
-// 更新產品行的函數
+// 定義更新產品行的函數
 function updateProductRow(productDto) {
+    // 輸出日誌，顯示正在更新的產品資訊
     console.log("Updating row for product:", productDto);
+    // 獲取所有的產品行元素
     let rows = document.querySelectorAll('.product-row');
+    // 遍歷每一行，尋找與產品編號匹配的行
     rows.forEach(row => {
+        // 獲取產品編號單元格
         let prodNoCell = row.querySelector('td:nth-child(2)');
+        // 如果該單元格存在且內容與產品編號匹配
         if (prodNoCell && prodNoCell.textContent == productDto.prodNo) {
-            let statusCell = row.querySelector('td:nth-child(8)');//td元素
+            // 獲取狀態單元格
+            let statusCell = row.querySelector('td:nth-child(8)');
+            // 如果狀態單元格存在
             if (statusCell) {
-                statusCell.textContent = productDto.prodStatus;  // 直接使用 prodStatus 字符串
-                statusCell.className = productDto.prodStatus === '銷售中' ? 'text-success' : 'text-danger';  // 根據 prodStatus 字符串更新
+                // 更新狀態單元格的文本內容
+                statusCell.textContent = productDto.prodStatus;
+                // 根據產品狀態更新單元格的類別，以改變顯示顏色
+                statusCell.className = productDto.prodStatus === '銷售中' ? 'text-success' : 'text-danger';
             }
         }
     });
 }
-
-
-
-
-
-document.getElementById("activateProduct").addEventListener("click", function () {
-    toggleProductStatus(1); // 上架的狀態代碼
-});
-
-document.getElementById("deactivateProduct").addEventListener("click", function () {
-    toggleProductStatus(0); // 下架的狀態代碼
-});
-
-function toggleProductStatus(status) {
-    // 獲取選中的商品ID
-    let selectedProdNos = getSelectedProdNos();
-    // 發送請求到後端
-    selectedProdNos.forEach(prodNo => {
-        fetch(`/toggleStatus/${prodNo}`, {
-            method: 'PUT'
-        }).then(response => response.json())
-            .then(data => {
-                console.log("Received product status:", data.prodStatus);
-                // 更新前端界面
-                updateProductRow(data);
-            });
-    });
-    console.log("toggleProductStatus called with status:", status);
-
-}
-
-function getSelectedProdNos() {
-    let selectedProdNos = [];
-    let checkboxes = document.querySelectorAll('.product-checkbox');
-    checkboxes.forEach(checkbox => {
-        if (checkbox.checked) {
-            selectedProdNos.push(checkbox.value);
-        }
-    });
-    return selectedProdNos;
-}
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    // 當新增按鈕被點擊時，顯示模態框
-    document.getElementById('addProduct').addEventListener('click', function () {
-        $('#addProductModal').modal('show');
-    });
-
-    // 處理表單提交
-    document.getElementById('saveProduct').addEventListener('click', function () {
-        var form = document.getElementById('addProductForm');
-        if (form.checkValidity()) {
-            // 在這裡添加你的代碼來處理表單數據
-            // 例如，使用AJAX將數據發送到服務器
-
-            // 隱藏模態框
-            $('#addProductModal').modal('hide');
-        } else {
-            // 如果表單不合法，顯示錯誤信息
-            form.classList.add('was-validated');
-        }
-    });
-});
