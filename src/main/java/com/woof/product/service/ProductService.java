@@ -23,6 +23,8 @@ public class ProductService {
 
     public ProductDto saveProduct(ProductDto productDto) {
         Product product = convertToEntity(productDto);
+        // 在這裡處理 prodPhoto 的二進制數據
+        product.setProdPhoto(productDto.getProdPhoto());
         Product savedProduct = repository.save(product);
         return convertToDto(savedProduct);
     }

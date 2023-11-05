@@ -11,7 +11,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="addProductForm">
+                    <form id="addProductForm" enctype="multipart/form-data">
                         <!-- 商品類別 -->
                         <div class="form-group">
                             <label for="productCategory">商品類別</label>
@@ -31,7 +31,7 @@
                         <!-- 商品照片 -->
                         <div class="form-group">
                             <label for="productImage">商品照片</label>
-                            <input type="file" class="form-control-file" id="productImage">
+                            <input type="file" class="form-control-file" id="productImage" name="productImage">
                         </div>
                         <!-- 商品敘述 -->
                         <div class="form-group">
@@ -43,15 +43,15 @@
                         <div class="form-group">
                             <label for="productStatus">上下架狀態</label>
                             <select class="form-control" id="productStatus">
-                                <option value="上架">上架</option>
-                                <option value="下架" selected>下架</option>
+                                <option value="銷售中">上架</option>
+                                <option value="下架中" selected>下架</option>
                             </select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="submit" class="btn btn-primary" id="saveProduct">保存</button>
+                    <button type="button" class="btn btn-primary" id="saveProduct">保存</button>
                 </div>
             </div>
         </div>

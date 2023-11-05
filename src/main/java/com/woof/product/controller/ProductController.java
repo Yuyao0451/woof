@@ -10,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -21,7 +23,25 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping("/addProduct")
-    public ResponseEntity<ProductDto> addProduct(@Valid @RequestBody ProductDto productDto) {
+    public ResponseEntity<ProductDto> addProduct(
+            @RequestParam("prodCatName") String prodCatName,
+            @RequestParam("prodContent") String prodContent,
+            @RequestParam("prodPrice") Integer prodPrice,
+            @RequestParam("prodName") String prodName,
+            @RequestParam("prodStatus") String prodStatus,
+            @RequestParam("prodPhoto") MultipartFile prodPhoto) {
+        ProductDto productDto = new ProductDto();
+        productDto.setProdCatName(prodCatName);
+        productDto.setProdContent(prodContent);
+        productDto.setProdPrice(prodPrice);
+        productDto.setProdName(prodName);
+        productDto.setProdStatus(prodStatus);
+        try {
+            productDto.setProdPhoto(prodPhoto.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
         ProductDto savedProductDto = service.saveProduct(productDto);
         return new ResponseEntity<>(savedProductDto, HttpStatus.CREATED);
     }
