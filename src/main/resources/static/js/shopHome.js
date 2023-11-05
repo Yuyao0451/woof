@@ -18,7 +18,7 @@ function loadProducts(category) {
                                 <p class="card-text">${product.prodName}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">查看</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary view-details" data-prodno="${product.prodNo}">查看</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary">加入購物車</button>
                                     </div>
                                     <small class="text-muted">$${product.prodPrice}</small>
@@ -30,6 +30,13 @@ function loadProducts(category) {
                 // 將商品卡片插入到頁面中
                 $('#products-row').append(productCard);
             });
+
+            // 綁定查看詳情按鈕的點擊事件
+            $('#products-row').on('click', '.view-details', function() {
+                var prodNo = $(this).data('prodno');
+                window.location.href = `/productDetail.html?prodNo=${prodNo}`; // 確保這個路徑是正確的
+            });
+
         },
         error: function(error) {
             // 請求失敗時在控制台打印錯誤信息
