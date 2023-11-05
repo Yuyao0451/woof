@@ -90,5 +90,14 @@ public class ProductController {
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
+    @GetMapping("/productsByCategory/{category}")
+    public ResponseEntity<List<ProductDto>> findProductsByCategory(@PathVariable String category) {
+        List<ProductDto> products = service.getProductsByCategory(category);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
 
 }

@@ -131,4 +131,11 @@ public class ProductService {
         return null;
     }
 
+    public List<ProductDto> getProductsByCategory(String category) {
+        ProductCategory productCategory = getCategoryByName(category);
+        List<Product> products = repository.findByProdCatName(productCategory);
+        return products.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+
 }

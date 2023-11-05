@@ -1,0 +1,22 @@
+
+.product-card {
+    transition: transform .2s; /* 添加過渡效果 */
+}
+.product-card:hover {
+    transform: scale(1.05); /* 懸停時放大 */
+}
+.product-img {
+    width: 100%; /* 讓圖片寬度自適應卡片 */
+    height: 200px; /* 固定圖片高度 */
+    object-fit: cover; /* 保持圖片的比例 */
+}
+.btn-custom {
+    background-color: #007bff; /* 自定義按鈕顏色 */
+    color: white;
+}
+.btn-custom:hover {
+    background-color: #0056b3; /* 懸停時的按鈕顏色 */
+}
+.price-text {
+    font-weight: bold; /* 價格文字加粗 */
+}
