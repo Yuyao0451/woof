@@ -2,7 +2,7 @@ $(document).ready(function() {
     // 從URL獲取商品ID
     var prodNo = new URLSearchParams(window.location.search).get('prodNo');
 
-    // 如果prodNo存在，則從後端獲取商品詳情
+
     if (prodNo) {
         $.ajax({
             url: `/productById/${prodNo}`,
@@ -13,7 +13,6 @@ $(document).ready(function() {
                 $('#product-name').text(product.prodName);
                 $('#product-description').text(product.prodContent);
                 $('#product-price').text(`$${product.prodPrice}`);
-                // ...其他需要更新的元素...
             },
             error: function(error) {
                 console.log('Error fetching product details:', error);
