@@ -19,7 +19,7 @@ function loadProducts(category) {
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary view-details" data-prodno="${product.prodNo}">查看</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">加入購物車</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary add-to-cart" data-id="${product.prodNo}" data-name="${product.prodName}" data-price="${product.prodPrice}">加入購物車</button>
                                     </div>
                                     <small class="text-muted">$${product.prodPrice}</small>
                                 </div>
