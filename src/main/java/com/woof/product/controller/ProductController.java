@@ -46,6 +46,46 @@ public class ProductController {
         return new ResponseEntity<>(savedProductDto, HttpStatus.CREATED);
     }
 
+    @PutMapping("/updateProduct/{prodNo}")
+    public ResponseEntity<ProductDto> updateProduct(
+            @PathVariable Integer prodNo,
+            @RequestParam("prodCatName") String prodCatName,
+            @RequestParam("prodContent") String prodContent,
+            @RequestParam("prodPrice") Integer prodPrice,
+            @RequestParam("prodName") String prodName,
+            @RequestParam("prodStatus") String prodStatus,
+            @RequestParam(value = "prodPhoto", required = false) MultipartFile prodPhoto) {
+
+        // 從資料庫中獲取現有商品資料
+        ProductDto existingProductDto = service.getProductById(prodNo);
+        if (existingProductDto == null) {
+            // 如果商品不存在，返回404錯誤
+            return ResponseEntity.notFound().build();
+        }
+
+        // 更新商品資料
+        existingProductDto.setProdCatName(prodCatName);
+        existingProductDto.setProdContent(prodContent);
+        existingProductDto.setProdPrice(prodPrice);
+        existingProductDto.setProdName(prodName);
+        existingProductDto.setProdStatus(prodStatus);
+
+        // 處理照片更新
+        if (prodPhoto != null && !prodPhoto.isEmpty()) {
+            try {
+                existingProductDto.setProdPhoto(prodPhoto.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+
+        // 儲存更新後的商品
+        ProductDto updatedProductDto = service.saveProduct(existingProductDto);
+        return ResponseEntity.ok(updatedProductDto);
+    }
+
+
     @GetMapping("/products")
     public List<ProductDto> findAllProducts() {
         return service.getProducts();
@@ -76,13 +116,6 @@ public class ProductController {
     @GetMapping("/productsPaged")//分頁
     public Page<ProductDto> findAllProductsPaged(Pageable pageable) {
         return service.getProductsPaged(pageable);
-    }
-
-
-    @PutMapping("/update")
-    public ResponseEntity<ProductDto> updateProduct(@Valid @RequestBody ProductDto productDto) {
-        ProductDto updatedProductDto = service.saveProduct(productDto);
-        return ResponseEntity.ok(updatedProductDto);
     }
 
     @DeleteMapping("/delete/{prodNo}")
