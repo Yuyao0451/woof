@@ -57,7 +57,9 @@
     </div>
 </div>
 
-<div th:insert="modal :: addProductModal"></div>
+<div th:insert="addModal :: addProductModal"></div>
+<div th:replace="editModal :: editProductModal"></div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -67,6 +69,8 @@
 <script src="/js/productStatus.js"></script>
 <script src="/js/selectAllCheckbox.js"></script>
 <script src="/js/modal.js"></script>
+<script src="/js/editModal.js"></script>
+
 
 </body>
 </html>

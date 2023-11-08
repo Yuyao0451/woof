@@ -38,6 +38,9 @@ public class ProductService {
 
     private Product convertToEntity(ProductDto productDto) {
         Product product = new Product();
+        if (productDto.getProdNo() != null) {
+            product.setProdNo(productDto.getProdNo());
+        }
         product.setProdCatName(getCategoryByName(productDto.getProdCatName()));
         product.setProdContent(productDto.getProdContent());
         product.setProdPrice(productDto.getProdPrice());
@@ -45,6 +48,19 @@ public class ProductService {
         product.setProdStatus(getStatusByName(productDto.getProdStatus()));
         product.setProdPhoto(productDto.getProdPhoto());
         return product;
+    }
+
+    private ProductDto convertToDto(Product product) {
+        ProductDto dto = new ProductDto();
+        dto.setProdNo(product.getProdNo());
+        dto.setProdCatName(product.getProdCatName().getDisplayName());
+        dto.setProdContent(product.getProdContent());
+        dto.setProdPrice(product.getProdPrice());
+        dto.setProdName(product.getProdName());
+        dto.setProdStatus(product.getProdStatus().getDisplayName());
+        // 直接使用二進制數據
+        dto.setProdPhoto(product.getProdPhoto());
+        return dto;
     }
 
     //使用displayname獲得enum值
@@ -97,19 +113,6 @@ public class ProductService {
         return products.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
-    }
-
-    private ProductDto convertToDto(Product product) {
-        ProductDto dto = new ProductDto();
-        dto.setProdNo(product.getProdNo());
-        dto.setProdCatName(product.getProdCatName().getDisplayName());
-        dto.setProdContent(product.getProdContent());
-        dto.setProdPrice(product.getProdPrice());
-        dto.setProdName(product.getProdName());
-        dto.setProdStatus(product.getProdStatus().getDisplayName());
-        // 直接使用二進制數據
-        dto.setProdPhoto(product.getProdPhoto());
-        return dto;
     }
 
 
