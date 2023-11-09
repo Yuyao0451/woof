@@ -60,7 +60,6 @@
         .then(response => response.text())
         .then(html => {
             document.getElementById('addProductModalContainer').innerHTML = html;
-            bindAddProductModalEvents(); // 綁定模態框事件的函數
         });
 
     // 加載修改商品模態框並綁定事件

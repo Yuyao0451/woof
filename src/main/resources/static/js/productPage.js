@@ -36,7 +36,6 @@ function createProductRow(product) {
 
 // 定義更新產品行的函數
 function updateProductRow(productDto) {
-    // 輸出日誌，顯示正在更新的產品資訊
     console.log("Updating row for product:", productDto);
     // 獲取所有的產品行元素
     let rows = document.querySelectorAll('.product-row');
@@ -48,9 +47,9 @@ function updateProductRow(productDto) {
             // 獲取狀態單元格
             let statusCell = row.querySelector('td:nth-child(8)');
             if (statusCell) {
-                // 更新狀態單元格的文本內容
+                // 更新狀態單元格的內容
                 statusCell.textContent = productDto.prodStatus;
-                // 根據產品狀態更新單元格的類別，以改變顯示顏色
+                // 根據產品狀態更新單元格，以改變顯示顏色
                 statusCell.className = productDto.prodStatus === '銷售中' ? 'text-success' : 'text-danger';
             }
         }

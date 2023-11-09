@@ -1,4 +1,3 @@
-// 綁定修改商品模態框的事件
 function bindEditProductModalEvents() {
     // 監聽修改商品按鈕的點擊事件
     document.getElementById('editProduct').addEventListener('click', function () {
@@ -50,7 +49,7 @@ function bindEditProductModalEvents() {
                     console.error('Error:', error);
                 });
         } else {
-            alert('請選擇一個商品進行編輯。');
+            alert('請選擇一個商品進行修改。');
         }
     });
 

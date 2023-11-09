@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     })
                     .then(data => {
                         console.log('Product added:', data);
-                        // 可以在這裡添加代碼來處理新增產品後的 UI 更新
                     })
                     .catch(error => {
                         console.error('There has been a problem with your fetch operation:', error);
@@ -80,6 +79,5 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.text())
         .then(html => {
             document.getElementById('addProductModalContainer').innerHTML = html;
-            // 這裡不需要再次綁定事件，因為它們已經在按鈕點擊時綁定了
         });
 });
