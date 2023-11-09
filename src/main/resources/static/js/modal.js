@@ -1,4 +1,3 @@
-// 當DOM加載完成後處理模態框相關的功能
 document.addEventListener('DOMContentLoaded', function () {
     // 當新增產品按鈕被點擊時，顯示模態框
     document.getElementById('addProduct').addEventListener('click', function () {
@@ -28,16 +27,15 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('saveProduct').addEventListener('click', function () {
         var form = document.getElementById('addProductForm');
         if (form.checkValidity()) {
-            // 創建 FormData 對象
+            // 創建 FormData
             var formData = new FormData(form);
 
-            // 添加參數到 FormData 對象
+            // 添加參數到 FormData
             formData.set('prodCatName', document.getElementById('productCategory').value);
             formData.set('prodContent', document.getElementById('productDescription').value);
             formData.set('prodPrice', document.getElementById('productPrice').value);
             formData.set('prodName', document.getElementById('productName').value);
 
-            // 根據選擇的上下架狀態設置 prodStatus
             var productStatusValue = document.getElementById('productStatus').value;
             formData.set('prodStatus', productStatusValue === '銷售中' ? '銷售中' : '下架中');
 
@@ -45,13 +43,12 @@ document.addEventListener('DOMContentLoaded', function () {
             var productImageFile = document.getElementById('productImage').files[0];
             formData.set('prodPhoto', productImageFile);
 
-            // 確保文件上傳的名稱與後端預期的名稱匹配
             var fileInput = document.getElementById('productImage');
             if (fileInput.files.length > 0) {
                 formData.set('prodPhoto', fileInput.files[0]);
             }
 
-            // 使用 fetch API 發送數據到服務器
+
             fetch('/addProduct', {
                 method: 'POST',
                 body: formData
@@ -66,12 +63,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(data => {
                     console.log('Product added:', data);
-                    // 處理成功響應，例如更新 UI 或通知用戶
-                    // 這裡可以添加代碼來更新 UI 或通知用戶
                 })
                 .catch(error => {
                     console.error('There has been a problem with your fetch operation:', error);
-                    // 處理錯誤情況，這裡可以添加代碼來通知用戶
                 });
 
             // 隱藏模態框

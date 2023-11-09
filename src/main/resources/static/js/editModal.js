@@ -3,7 +3,7 @@ document.getElementById('editProduct').addEventListener('click', function () {
     const selectedCheckboxes = document.querySelectorAll('.product-checkbox:checked');
     if (selectedCheckboxes.length === 1) {
         const prodNo = selectedCheckboxes[0].value;
-        console.log('Selected product number:', prodNo); // 調試輸出
+        console.log('Selected product number:', prodNo);
 
         // 同時加載商品類別和商品狀態
         Promise.all([
@@ -58,7 +58,7 @@ document.getElementById('updateProduct').addEventListener('click', function () {
     if (form.checkValidity()) {
         var formData = new FormData(form);
         var prodNo = document.getElementById('editProductId').value;
-        console.log('Updating product number:', prodNo); // 調試輸出
+        console.log('Updating product number:', prodNo);
         formData.set('prodCatName', document.getElementById('editProductCategory').value);
         formData.set('prodContent', document.getElementById('editProductDescription').value);
         formData.set('prodPrice', document.getElementById('editProductPrice').value);
@@ -83,7 +83,6 @@ document.getElementById('updateProduct').addEventListener('click', function () {
             })
             .then(data => {
                 console.log('Product updated:', data);
-                // 更新 UI 或通知用戶
                 $('#editProductModal').modal('hide');
                 // 更新商品列表
                 // updateProductList();

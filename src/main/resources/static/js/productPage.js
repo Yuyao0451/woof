@@ -1,14 +1,11 @@
-// 當文檔加載完成後，執行內部的函數
 document.addEventListener('DOMContentLoaded', function () {
     // 呼叫函數以加載最新的產品數據並更新表格
     fetchProductsAndUpdateTable();
 });
 
-// 定義從後端API獲取產品數據並更新表格的函數
 function fetchProductsAndUpdateTable() {
-    // 使用fetch API從'/products'路徑獲取產品數據
     fetch('/products')
-        .then(response => response.json()) // 將響應轉換為JSON
+        .then(response => response.json())
         .then(products => {
             // 遍歷產品數據，為每個產品更新表格行
             products.forEach(product => {
@@ -29,11 +26,9 @@ function updateProductRow(productDto) {
     rows.forEach(row => {
         // 獲取產品編號單元格
         let prodNoCell = row.querySelector('td:nth-child(2)');
-        // 如果該單元格存在且內容與產品編號匹配
         if (prodNoCell && prodNoCell.textContent == productDto.prodNo) {
             // 獲取狀態單元格
             let statusCell = row.querySelector('td:nth-child(8)');
-            // 如果狀態單元格存在
             if (statusCell) {
                 // 更新狀態單元格的文本內容
                 statusCell.textContent = productDto.prodStatus;
