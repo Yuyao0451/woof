@@ -7,13 +7,31 @@ function fetchProductsAndUpdateTable() {
     fetch('/products')
         .then(response => response.json())
         .then(products => {
-            // 遍歷產品數據，為每個產品更新表格行
+            const tableBody = document.getElementById('productTableBody');
+            tableBody.innerHTML = ''; // 清空現有的表格內容
             products.forEach(product => {
-                updateProductRow(product);
+                const row = createProductRow(product);
+                tableBody.appendChild(row);
             });
             // 數據更新後重新計算分頁
             updateTable();
         });
+}
+
+function createProductRow(product) {
+    const row = document.createElement('tr');
+    row.classList.add('product-row');
+    row.innerHTML = `
+        <td><input type="checkbox" value="${product.prodNo}" class="product-checkbox"></td>
+        <td>${product.prodNo}</td>
+        <td><img src="/productImage/${product.prodNo}" alt="Product Photo" style="width: 100px; height: 100px;"></td>
+        <td>${product.prodCatName}</td>
+        <td>${product.prodName}</td>
+        <td>${product.prodContent}</td>
+        <td>${product.prodPrice}</td>
+        <td class="${product.prodStatus === '銷售中' ? 'text-success' : 'text-danger'}">${product.prodStatus}</td>
+    `;
+    return row;
 }
 
 // 定義更新產品行的函數

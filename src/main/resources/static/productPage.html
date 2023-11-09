@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>商品管理</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/productPage.css">
@@ -34,21 +35,13 @@
             <th>商品狀態</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="product : ${products}" class="product-row">
-            <td><input type="checkbox" th:value="${product.prodNo}" class="product-checkbox"></td>
-            <td th:text="${product.prodNo}"></td>
-            <td><img th:src="@{/productImage/{prodNo}(prodNo=${product.prodNo})}" alt="Product Photo"
-                     style="width: 100px; height: 100px;"></td>
-            <td th:text="${product.prodCatName}"></td>
-            <td th:text="${product.prodName}"></td>
-            <td th:text="${product.prodContent}"></td>
-            <td th:text="${product.prodPrice}"></td>
-            <td th:class="${product.prodStatus == '上架' ? 'text-danger' : 'text-success'}"
-                th:text="${product.prodStatus}"></td>
-        </tr>
+        <tbody id="productTableBody">
+        <!-- 產品資料將透過 JavaScript 動態插入 -->
         </tbody>
     </table>
+
+    <div id="addProductModalContainer"></div>
+    <div id="editProductModalContainer"></div>
 
     <div id="paginationControls">
         <button id="prevPage">上一頁</button>
@@ -57,20 +50,34 @@
     </div>
 </div>
 
-<div th:insert="addModal :: addProductModal"></div>
-<div th:replace="editModal :: editProductModal"></div>
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // 加載新增商品模態框並綁定事件
+    fetch('/addModal.html')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('addProductModalContainer').innerHTML = html;
+            bindAddProductModalEvents(); // 綁定模態框事件的函數
+        });
+
+    // 加載修改商品模態框並綁定事件
+    fetch('/editModal.html')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('editProductModalContainer').innerHTML = html;
+            bindEditProductModalEvents(); // 綁定模態框事件的函數
+        });
+</script>
+
 <script src="/js/productPage.js"></script>
 <script src="/js/pagination.js"></script>
 <script src="/js/productStatus.js"></script>
 <script src="/js/selectAllCheckbox.js"></script>
 <script src="/js/modal.js"></script>
 <script src="/js/editModal.js"></script>
-
 
 </body>
 </html>
