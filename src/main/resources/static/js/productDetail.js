@@ -15,9 +15,13 @@ $(document).ready(function() {
                 $('#product-price').text(`$${product.prodPrice}`);
 
                 // 更新加入購物車按鈕的 data-* 屬性
-                $('#add-to-cart').data('id', product.prodNo);
-                $('#add-to-cart').data('name', product.prodName);
-                $('#add-to-cart').data('price', product.prodPrice);
+                $('.add-to-cart').attr('data-id', product.prodNo);
+                $('.add-to-cart').attr('data-name', product.prodName);
+                $('.add-to-cart').attr('data-price', product.prodPrice);
+
+                console.log($('.add-to-cart').attr('data-id'));
+                console.log($('.add-to-cart').attr('data-name'));
+                console.log($('.add-to-cart').attr('data-price'));
             },
             error: function(error) {
                 console.log('Error fetching product details:', error);
