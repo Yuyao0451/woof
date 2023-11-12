@@ -24,6 +24,7 @@ public class ProductDto {
 
     private byte[] prodPhoto;
 
+    private Integer promoId;
 
     public Integer getProdNo() {
         return prodNo;
@@ -79,5 +80,13 @@ public class ProductDto {
 
     public void setProdPhoto(byte[] prodPhoto) {
         this.prodPhoto = prodPhoto;
+    }
+
+    public Integer getPromoId() {
+        return promoId;
+    }
+
+    public void setPromoId(Integer promoId) {
+        this.promoId = promoId;
     }
 }

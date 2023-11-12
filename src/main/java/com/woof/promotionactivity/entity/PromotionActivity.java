@@ -18,25 +18,25 @@ public class PromotionActivity {
 	// nullable = false(不可以是空值)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "PA_NO" , updatable = false , nullable = false)
+	@Column(name = "PA_NO" , updatable = false , nullable = false)//促銷活動編號 PK,AI
 	private Integer paNo;
 	
-	@Column(name = "PA_NAME" , nullable = false)
+	@Column(name = "PA_NAME" , nullable = false)				  //促銷活動名稱
 	private String paName;
 	
-	@Column(name = "PA_DISCOUNT" , nullable = false)
+	@Column(name = "PA_DISCOUNT" , nullable = false)			  //促銷折扣數
 	private BigDecimal paDiscount;
 	
-	@Column(name = "PA_CONTENT" , nullable = false)
+	@Column(name = "PA_CONTENT" , nullable = false)				  //促銷活動內容
 	private String paContent;
 	
-	@Column(name = "PA_START" , nullable = false)
+	@Column(name = "PA_START" , nullable = false)				  //促銷開始日期
 	private Timestamp paStart;
 	
-	@Column(name = "PA_END" , nullable = false)
+	@Column(name = "PA_END" , nullable = false)					  //促銷結束日期
 	private Timestamp paEnd;
 	
-	@Column(name = "PA_STATUS" , nullable = false)
+	@Column(name = "PA_STATUS" , nullable = false)				  //促銷活動狀態 0下架 1上架
 	private Boolean paStatus;
 	
 	

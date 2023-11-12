@@ -43,6 +43,9 @@ public class Product implements Serializable {
 	@Column(name="PROD_PHOTO") //商品照片
 	private byte[] prodPhoto;
 
+	@Column(name="PROMO_ID") // 用於存儲促銷活動ID
+	private Integer promoId;
+
 	public Integer getProdNo() {
 		return prodNo;
 	}
@@ -99,32 +102,11 @@ public class Product implements Serializable {
 		this.prodPhoto = prodPhoto;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Product product = (Product) o;
-		return Objects.equals(prodNo, product.prodNo) && prodCatName == product.prodCatName && Objects.equals(prodContent, product.prodContent) && Objects.equals(prodPrice, product.prodPrice) && Objects.equals(prodName, product.prodName) && prodStatus == product.prodStatus && Arrays.equals(prodPhoto, product.prodPhoto);
+	public Integer getPromoId() {
+		return promoId;
 	}
 
-	@Override
-	public int hashCode() {
-		int result = Objects.hash(prodNo, prodCatName, prodContent, prodPrice, prodName, prodStatus);
-		result = 31 * result + Arrays.hashCode(prodPhoto);
-		return result;
+	public void setPromoId(Integer promoId) {
+		this.promoId = promoId;
 	}
-
-	@Override
-	public String toString() {
-		String photoDesc = (prodPhoto != null) ? "Photo Size: " + prodPhoto.length + " bytes" : "No Photo";
-		return "Product{" +
-				"prodNo=" + prodNo +
-				", prodCatName=" + prodCatName +
-				", prodContent='" + prodContent + '\'' +
-				", prodPrice=" + prodPrice +
-				", prodName='" + prodName + '\'' +
-				", prodStatus=" + prodStatus +
-				", " + photoDesc +
-				'}';
-	}//照片是二進制 怕會印出大量數據 更改成只印出長度
 }
