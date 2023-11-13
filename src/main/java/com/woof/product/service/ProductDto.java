@@ -26,6 +26,8 @@ public class ProductDto {
 
     private Integer promoId;
 
+    private Integer promoPrice;  // 折扣後價格
+
     public Integer getProdNo() {
         return prodNo;
     }
@@ -88,5 +90,13 @@ public class ProductDto {
 
     public void setPromoId(Integer promoId) {
         this.promoId = promoId;
+    }
+
+    public Integer getPromoPrice() {
+        return promoPrice;
+    }
+
+    public void setPromoPrice(Integer promoPrice) {
+        this.promoPrice = promoPrice;
     }
 }
