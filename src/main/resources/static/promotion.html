@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寵毛導師 Woof | 促銷活動管理</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/promotion.css">
+
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="mb-4">促銷活動管理</h1>
+
+    <div class="d-flex justify-content-between mb-3">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#promotionModal">新增促銷活動</button>
+    </div>
+
+    <table class="table" id="promotionActivitiesTable">
+        <thead>
+        <tr>
+            <th>活動編號</th>
+            <th>活動名稱</th>
+            <th>折扣</th>
+            <th>活動內容</th>
+            <th>開始日期</th>
+            <th>結束日期</th>
+            <th>狀態</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 促銷活動數據將在這裡動態生成 -->
+        </tbody>
+    </table>
+
+    <!-- 分頁控件 -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="#">上一頁</a></li>
+            <!-- 分頁數字 -->
+            <li class="page-item"><a class="page-link" href="#">下一頁</a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- 促銷活動新增/編輯模態框 -->
+<div class="modal fade" id="promotionModal" tabindex="-1" aria-labelledby="promotionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="promotionModalLabel">促銷活動</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- 表單內容 -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                <button type="button" class="btn btn-primary">儲存變更</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/promotion.js"></script>
+</body>
+</html>
