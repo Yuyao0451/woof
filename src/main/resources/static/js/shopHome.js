@@ -7,7 +7,8 @@ function loadProducts(category) {
             // 清空商品展示區域
             $('#products-row').empty();
             // 遍歷商品數據，並動態生成商品卡片
-            products.forEach(function(product) {
+            //已新增上架商品才能顯示
+            products.filter(product => product.prodStatus === '銷售中').forEach(function(product) {
                 var productCard = `
                     <div class="col-md-4">
                         <div class="card mb-3 box-shadow">
