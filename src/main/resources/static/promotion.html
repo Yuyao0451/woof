@@ -6,7 +6,6 @@
     <title>寵毛導師 Woof | 促銷活動管理</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/promotion.css">
-
 </head>
 <body>
 
@@ -61,7 +60,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="paDiscount" class="form-label">折扣</label>
-                        <input type="number" class="form-control" id="paDiscount" required>
+                        <input type="number" class="form-control" id="paDiscount" min="0.01" max="0.99" step="0.01" value="0.99" required>
                     </div>
                     <div class="mb-3">
                         <label for="paContent" class="form-label">活動內容</label>
@@ -69,11 +68,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="paStart" class="form-label">開始日期</label>
-                        <input type="date" class="form-control" id="paStart" required>
+                        <input type="datetime-local" class="form-control" id="paStart" required>
                     </div>
                     <div class="mb-3">
                         <label for="paEnd" class="form-label">結束日期</label>
-                        <input type="date" class="form-control" id="paEnd" required>
+                        <input type="datetime-local" class="form-control" id="paEnd" required>
                     </div>
                     <div class="mb-3">
                         <label for="paStatusSelect" class="form-label">活動狀態</label>
