@@ -13,7 +13,7 @@ $(document).ready(function() {
             paContent: $('#paContent').val(),
             paStart: $('#paStart').val(),
             paEnd: $('#paEnd').val(),
-            paStatus: $('#paStatus').is(':checked')
+            paStatus: $('#paStatusSelect').val() === 'true'
         };
 
         var id = $('#promotionModal').data('id');
@@ -38,9 +38,32 @@ function loadPromotionActivities() {
                 <td>${formatDate(activity.paStart)}</td>
                 <td>${formatDate(activity.paEnd)}</td>
                 <td class="${statusClass}">${activity.paStatus ? '上架' : '下架'}</td>
+                <td><button class="btn btn-secondary editBtn" data-id="${activity.paNo}">編輯</button></td>
             </tr>`;
             $('#promotionActivitiesTable tbody').append(row);
         });
+
+        // 綁定編輯按鈕事件
+        $('.editBtn').on('click', function() {
+            var id = $(this).data('id');
+            loadPromotionActivityForEdit(id);
+        });
+    });
+}
+
+
+function loadPromotionActivityForEdit(id) {
+    $.get('/promotion/' + id, function(activity) {
+        $('#paName').val(activity.paName);
+        $('#paDiscount').val(activity.paDiscount);
+        $('#paContent').val(activity.paContent);
+        $('#paStart').val(formatDate(activity.paStart));
+        $('#paEnd').val(formatDate(activity.paEnd));
+        $('#paStatusSelect').val(activity.paStatus ? 'true' : 'false');
+
+        $('#promotionModal').data('id', id);
+        $('#promotionModalLabel').text('編輯促銷活動');
+        $('#promotionModal').modal('show');
     });
 }
 
@@ -78,7 +101,12 @@ function createPromotionActivity(activity) {
 }
 
 function clearModalFields() {
-    // 清空模態框中的輸入欄位
+    $('#paName').val('');
+    $('#paDiscount').val('');
+    $('#paContent').val('');
+    $('#paStart').val('');
+    $('#paEnd').val('');
+    $('#paStatusSelect').val('true'); // 預設為 '上架'
 }
 
 function formatDate(dateString) {
