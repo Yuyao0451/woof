@@ -58,6 +58,7 @@ $(document).ready(function () {
                 <td>${formatDateTime(activity.paEnd)}</td>
                 <td class="${statusClass}">${activity.paStatus ? '上架' : '下架'}</td>
                 <td><button class="btn btn-secondary editBtn" data-id="${activity.paNo}">編輯</button></td>
+                <td><button class="btn btn-secondary selectProductsBtn" data-id="${activity.paNo}">選擇商品</button></td>
             </tr>`;
                     $('#promotionActivitiesTable tbody').append(row);
                 });
@@ -182,6 +183,67 @@ $(document).ready(function () {
 
         return isValid;
     }
+
+    // 加載商品列表
+    function loadProducts() {
+        $.get('/products', function (products) {
+            var modalBody = $('#productSelectionModal .modal-body');
+            modalBody.empty(); // 清空現有內容
+
+            console.log(products);
+            products.forEach(function (product) {
+                var productRow = `
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="${product.prodNo}" id="product-${product.prodNo}">
+                    <label class="form-check-label" for="product-${product.prodNo}">
+                        ${product.prodNo} - ${product.prodName}
+                        <img src="/productImage/${product.prodNo}" alt="Product Photo" style="width: 100px; height: 100px;">
+                    </label>
+                </div>
+            `;
+                modalBody.append(productRow);
+            });
+        });
+    }
+
+    // 更新商品的促銷活動ID
+    function updateProductPromoId(prodNo, promoId) {
+        $.ajax({
+            url: '/updateProduct/' + prodNo,
+            method: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({ promoId: promoId }),
+            success: function (response) {
+                console.log('Product updated', response);
+            }
+        });
+    }
+
+    $('#promotionActivitiesTable').on('click', '.selectProductsBtn', function () {
+        var promoId = $(this).data('id');
+        $('#productSelectionModal').data('promoId', promoId);
+        $('#selectProductsModal').modal('show');
+    });
+
+    // 當用戶提交選擇的商品時的處理函數
+    $('#saveProductSelectionBtn').on('click', function () {
+        var selectedProducts = $('#productSelectionModal .form-check-input:checked');
+        var promoId = $('#selectProductsModal').data('promoId');
+
+        selectedProducts.each(function () {
+            var prodNo = $(this).val();
+            var promoId = $(this).data('id');
+            updateProductPromoId(prodNo, promoId);
+        });
+
+        // 關閉模態框
+        $('#productSelectionModal').modal('hide');
+    });
+
+    // 在打開模態框時加載商品列表
+    $('#productSelectionModal').on('show.bs.modal', function () {
+        loadProducts();
+    });
 
 });
 
