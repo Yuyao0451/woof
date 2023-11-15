@@ -3,6 +3,8 @@ package com.woof.promotionactivity.service;
 import com.woof.promotionactivity.entity.PromotionActivity;
 import com.woof.promotionactivity.dao.PromotionActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class PromotionActivityService {
     @Autowired
     private PromotionActivityRepository repository;
 
-    public List<PromotionActivity> getAll() {
-        return repository.findAll();
+    public Page<PromotionActivity> getAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     public Optional<PromotionActivity> getById(Integer id) {

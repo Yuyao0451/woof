@@ -26,13 +26,30 @@ $(document).ready(function () {
         }
     });
 
+    let totalPage = 0;
+    let currentPage = 0;
+    const pageSize = 10;
 
-    function loadPromotionActivities() {
-        $.get('/promotion', function (activities) {
+    $('.pagination .page-link').on('click', function (e) {
+        e.preventDefault();
+        const action = $(this).text().trim();
+
+        if (action === '上一頁' && currentPage > 0) {
+            currentPage--;
+            loadPromotionActivities(currentPage, pageSize);
+        } else if (action === '下一頁' && currentPage < totalPage - 1) {
+            currentPage++;
+            loadPromotionActivities(currentPage, pageSize);
+        }
+    });
+    function loadPromotionActivities(page = 0, size = 10) {
+        $.get(`/promotion?page=${page}&size=${size}`, function (response) {
+            totalPage = response.totalPages;
             $('#promotionActivitiesTable tbody').empty();
-            activities.forEach(function (activity) {
-                var statusClass = activity.paStatus ? 'status-on' : 'status-off';
-                var row = `<tr>
+            if (response && response.content) {
+                response.content.forEach(function (activity) {
+                    var statusClass = activity.paStatus ? 'status-on' : 'status-off';
+                    var row = `<tr>
                 <td>${activity.paNo}</td>
                 <td>${activity.paName}</td>
                 <td>${activity.paDiscount}</td>
@@ -42,15 +59,17 @@ $(document).ready(function () {
                 <td class="${statusClass}">${activity.paStatus ? '上架' : '下架'}</td>
                 <td><button class="btn btn-secondary editBtn" data-id="${activity.paNo}">編輯</button></td>
             </tr>`;
-                $('#promotionActivitiesTable tbody').append(row);
-            });
+                    $('#promotionActivitiesTable tbody').append(row);
+                });
 
-            $('.editBtn').on('click', function () {
-                var id = $(this).data('id');
-                loadPromotionActivityForEdit(id);
-            });
+                $('.editBtn').on('click', function () {
+                    var id = $(this).data('id');
+                    loadPromotionActivityForEdit(id);
+                });
+            }
         });
     }
+
 
     function loadPromotionActivityForEdit(id) {
         $.get('/promotion/' + id, function (activity) {
@@ -131,7 +150,6 @@ $(document).ready(function () {
         var value = inputElement.val();
         var errorDiv = $('#error-' + inputId);
 
-        // 如果錯誤訊息 Div 不存在，則創建它
         if (errorDiv.length === 0) {
             inputElement.after('<div id="error-' + inputId + '" class="text-danger"></div>');
             errorDiv = $('#error-' + inputId);
@@ -143,7 +161,6 @@ $(document).ready(function () {
             return false;
         }
 
-        // 其他檢查
         if (checkEmpty && !value.trim()) {
             errorDiv.text(errorMessage);
             return false;
@@ -165,4 +182,7 @@ $(document).ready(function () {
 
         return isValid;
     }
+
 });
+
+
