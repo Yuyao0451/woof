@@ -186,22 +186,22 @@ $(document).ready(function () {
 
     // 加載商品列表
     function loadProducts() {
+        // console.log('loadProducts function is called');
         $.get('/products', function (products) {
-            var modalBody = $('#productSelectionModal .modal-body');
-            modalBody.empty(); // 清空現有內容
+            // console.log('AJAX response:', products);
+            var productsTableBody = $('#selectProductsModal #productsTableBody');
+            productsTableBody.empty();
 
-            console.log(products);
             products.forEach(function (product) {
                 var productRow = `
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="${product.prodNo}" id="product-${product.prodNo}">
-                    <label class="form-check-label" for="product-${product.prodNo}">
-                        ${product.prodNo} - ${product.prodName}
-                        <img src="/productImage/${product.prodNo}" alt="Product Photo" style="width: 100px; height: 100px;">
-                    </label>
-                </div>
+                <tr>
+                    <td><input type="checkbox" value="${product.prodNo}" id="product-${product.prodNo}"></td>
+                    <td>${product.prodNo}</td>
+                    <td><img src="/productImage/${product.prodNo}" alt="Product Photo" style="width: 100px; height: 100px;"></td>
+                    <td>${product.prodName}</td>
+                </tr>
             `;
-                modalBody.append(productRow);
+                productsTableBody.append(productRow);
             });
         });
     }
@@ -214,7 +214,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify({ promoId: promoId }),
             success: function (response) {
-                console.log('Product updated', response);
+                // console.log('Product updated', response);
             }
         });
     }
@@ -241,7 +241,8 @@ $(document).ready(function () {
     });
 
     // 在打開模態框時加載商品列表
-    $('#productSelectionModal').on('show.bs.modal', function () {
+    $('#selectProductsModal').on('show.bs.modal', function () {
+        // console.log('Modal is shown');
         loadProducts();
     });
 
