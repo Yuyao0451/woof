@@ -195,7 +195,7 @@ $(document).ready(function () {
             products.forEach(function (product) {
                 var productRow = `
                 <tr>
-                    <td><input type="checkbox" value="${product.prodNo}" id="product-${product.prodNo}"></td>
+                    <td><input type="checkbox" class="form-check-input" value="${product.prodNo}" id="product-${product.prodNo}"></td>
                     <td>${product.prodNo}</td>
                     <td><img src="/productImage/${product.prodNo}" alt="Product Photo" style="width: 100px; height: 100px;"></td>
                     <td>${product.prodName}</td>
@@ -214,10 +214,14 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify({ promoId: promoId }),
             success: function (response) {
-                // console.log('Product updated', response);
+                console.log('Product updated', response); // 確認產品更新請求成功
+            },
+            error: function (xhr, status, error) {
+                console.log('Update error', status, error); // 如果有錯誤，這裡會顯示
             }
         });
     }
+
 
     $('#promotionActivitiesTable').on('click', '.selectProductsBtn', function () {
         var promoId = $(this).data('id');
@@ -226,19 +230,18 @@ $(document).ready(function () {
     });
 
     // 當用戶提交選擇的商品時的處理函數
-    $('#saveProductSelectionBtn').on('click', function () {
-        var selectedProducts = $('#productSelectionModal .form-check-input:checked');
+    $('#saveSelectedProducts').on('click', function () {
+        var selectedProducts = $('#selectProductsModal .form-check-input:checked');
         var promoId = $('#selectProductsModal').data('promoId');
 
         selectedProducts.each(function () {
             var prodNo = $(this).val();
-            var promoId = $(this).data('id');
-            updateProductPromoId(prodNo, promoId);
+            updateProductPromoId(prodNo, promoId); // 使用外部獲取的 promoId
         });
 
-        // 關閉模態框
-        $('#productSelectionModal').modal('hide');
+        $('#selectProductsModal').modal('hide');
     });
+
 
     // 在打開模態框時加載商品列表
     $('#selectProductsModal').on('show.bs.modal', function () {
