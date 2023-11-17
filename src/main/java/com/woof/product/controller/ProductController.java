@@ -49,11 +49,11 @@ public class ProductController {
     @PutMapping("/updateProduct/{prodNo}")
     public ResponseEntity<ProductDto> updateProduct(
             @PathVariable Integer prodNo,
-            @RequestParam("prodCatName") String prodCatName,
-            @RequestParam("prodContent") String prodContent,
-            @RequestParam("prodPrice") Integer prodPrice,
-            @RequestParam("prodName") String prodName,
-            @RequestParam("prodStatus") String prodStatus,
+            @RequestParam(value = "prodCatName", required = false) String prodCatName,
+            @RequestParam(value = "prodContent", required = false) String prodContent,
+            @RequestParam(value = "prodPrice", required = false) Integer prodPrice,
+            @RequestParam(value = "prodName", required = false) String prodName,
+            @RequestParam(value = "prodStatus", required = false) String prodStatus,
             @RequestParam(value = "prodPhoto", required = false) MultipartFile prodPhoto,
             @RequestParam(value = "promoId", required = false) Integer promoId) {
 
@@ -65,12 +65,12 @@ public class ProductController {
         }
 
         // 更新商品資料
-        existingProductDto.setProdCatName(prodCatName);
-        existingProductDto.setProdContent(prodContent);
-        existingProductDto.setProdPrice(prodPrice);
-        existingProductDto.setProdName(prodName);
-        existingProductDto.setProdStatus(prodStatus);
-        existingProductDto.setPromoId(promoId);
+        if (prodCatName != null) existingProductDto.setProdCatName(prodCatName);
+        if (prodContent != null) existingProductDto.setProdContent(prodContent);
+        if (prodPrice != null) existingProductDto.setProdPrice(prodPrice);
+        if (prodName != null) existingProductDto.setProdName(prodName);
+        if (prodStatus != null) existingProductDto.setProdStatus(prodStatus);
+        if (promoId != null) existingProductDto.setPromoId(promoId);
 
         // 處理照片更新
         if (prodPhoto != null && !prodPhoto.isEmpty()) {

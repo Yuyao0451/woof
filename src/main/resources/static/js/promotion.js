@@ -208,16 +208,17 @@ $(document).ready(function () {
 
     // 更新商品的促銷活動ID
     function updateProductPromoId(prodNo, promoId) {
+        var data = { promoId: promoId };
         $.ajax({
             url: '/updateProduct/' + prodNo,
             method: 'PUT',
-            contentType: 'application/json',
-            data: JSON.stringify({ promoId: promoId }),
+            contentType: 'application/x-www-form-urlencoded',
+            data: $.param(data),
             success: function (response) {
-                console.log('Product updated', response); // 確認產品更新請求成功
+                console.log('Product updated', response);
             },
             error: function (xhr, status, error) {
-                console.log('Update error', status, error); // 如果有錯誤，這裡會顯示
+                console.log('Update error', status, error);
             }
         });
     }
@@ -225,7 +226,7 @@ $(document).ready(function () {
 
     $('#promotionActivitiesTable').on('click', '.selectProductsBtn', function () {
         var promoId = $(this).data('id');
-        $('#productSelectionModal').data('promoId', promoId);
+        $('#selectProductsModal').data('promoId', promoId);
         $('#selectProductsModal').modal('show');
     });
 
@@ -234,6 +235,7 @@ $(document).ready(function () {
         var selectedProducts = $('#selectProductsModal .form-check-input:checked');
         var promoId = $('#selectProductsModal').data('promoId');
 
+        console.log("Selected promoId:", promoId);
         selectedProducts.each(function () {
             var prodNo = $(this).val();
             updateProductPromoId(prodNo, promoId); // 使用外部獲取的 promoId
