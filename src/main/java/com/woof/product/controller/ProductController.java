@@ -29,7 +29,7 @@ public class ProductController {
             @RequestParam("prodPrice") Integer prodPrice,
             @RequestParam("prodName") String prodName,
             @RequestParam("prodStatus") String prodStatus,
-            @RequestParam("prodPhoto") MultipartFile prodPhoto) {
+            @RequestParam("prodPhoto") MultipartFile prodPhoto){
         ProductDto productDto = new ProductDto();
         productDto.setProdCatName(prodCatName);
         productDto.setProdContent(prodContent);
@@ -54,7 +54,8 @@ public class ProductController {
             @RequestParam("prodPrice") Integer prodPrice,
             @RequestParam("prodName") String prodName,
             @RequestParam("prodStatus") String prodStatus,
-            @RequestParam(value = "prodPhoto", required = false) MultipartFile prodPhoto) {
+            @RequestParam(value = "prodPhoto", required = false) MultipartFile prodPhoto,
+            @RequestParam(value = "promoId", required = false) Integer promoId) {
 
         // 從資料庫中獲取現有商品資料
         ProductDto existingProductDto = service.getProductById(prodNo);
@@ -69,6 +70,7 @@ public class ProductController {
         existingProductDto.setProdPrice(prodPrice);
         existingProductDto.setProdName(prodName);
         existingProductDto.setProdStatus(prodStatus);
+        existingProductDto.setPromoId(promoId);
 
         // 處理照片更新
         if (prodPhoto != null && !prodPhoto.isEmpty()) {

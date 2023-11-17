@@ -52,6 +52,7 @@ public class ProductService {
         product.setProdName(productDto.getProdName());
         product.setProdStatus(getStatusByName(productDto.getProdStatus()));
         product.setProdPhoto(productDto.getProdPhoto());
+        product.setPromoId(productDto.getPromoId());
         return product;
     }
 
@@ -65,6 +66,7 @@ public class ProductService {
         dto.setProdStatus(product.getProdStatus().getDisplayName());
         // 直接使用二進制數據
         dto.setProdPhoto(product.getProdPhoto());
+        dto.setPromoId(product.getPromoId());
         // 設置折扣價格
         if (product.getPromoId() != null) {
             // 從促銷活動repository中找到相應的促銷活動
