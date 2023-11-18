@@ -93,6 +93,16 @@ public class ProductController {
         return service.getProducts();
     }
 
+    //促銷商品
+    @GetMapping("/promotionProducts")
+    public ResponseEntity<List<ProductDto>> findPromotionProducts() {
+        List<ProductDto> promotionProducts = service.getPromotionProducts();
+        if (promotionProducts.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(promotionProducts, HttpStatus.OK);
+    }
+
     @GetMapping("/productById/{prodNo}")
     public ResponseEntity<ProductDto> findProductById(@PathVariable int prodNo) {
         ProductDto productDto = service.getProductById(prodNo);

@@ -67,6 +67,7 @@ public class ProductService {
         // 直接使用二進制數據
         dto.setProdPhoto(product.getProdPhoto());
         dto.setPromoId(product.getPromoId());
+        dto.setIsPromotion(product.getPromoId() != null);
         // 設置折扣價格
         if (product.getPromoId() != null) {
             // 從促銷活動repository中找到相應的促銷活動
@@ -162,5 +163,12 @@ public class ProductService {
         return products.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
+
+    public List<ProductDto> getPromotionProducts() {
+        return repository.findAll().stream()
+                .map(this::convertToDto)
+                .filter(ProductDto::isPromotion)
+                .collect(Collectors.toList());
+    }
 
 }

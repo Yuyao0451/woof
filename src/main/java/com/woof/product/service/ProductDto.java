@@ -2,7 +2,6 @@ package com.woof.product.service;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 public class ProductDto {
     private Integer prodNo;
@@ -27,6 +26,8 @@ public class ProductDto {
     private Integer promoId;
 
     private Integer promoPrice;  // 折扣後價格
+
+    private boolean isPromotion;
 
     public Integer getProdNo() {
         return prodNo;
@@ -99,4 +100,13 @@ public class ProductDto {
     public void setPromoPrice(Integer promoPrice) {
         this.promoPrice = promoPrice;
     }
+
+    public boolean isPromotion() {
+        return isPromotion;
+    }
+
+    public void setIsPromotion(boolean isPromotion) {
+        this.isPromotion = isPromotion;
+    }
+
 }
