@@ -49,6 +49,7 @@ $(document).ready(function () {
             if (response && response.content) {
                 response.content.forEach(function (activity) {
                     var statusClass = activity.paStatus ? 'status-on' : 'status-off';
+                    var disabled = activity.paStatus ? '' : 'disabled="disabled"';//新增未上架活動無法開啟選擇商品
                     var row = `<tr>
                 <td>${activity.paNo}</td>
                 <td>${activity.paName}</td>
@@ -58,7 +59,7 @@ $(document).ready(function () {
                 <td>${formatDateTime(activity.paEnd)}</td>
                 <td class="${statusClass}">${activity.paStatus ? '上架' : '下架'}</td>
                 <td><button class="btn btn-secondary editBtn" data-id="${activity.paNo}">編輯</button></td>
-                <td><button class="btn btn-secondary selectProductsBtn" data-id="${activity.paNo}">選擇商品</button></td>
+                <td><button class="btn btn-secondary selectProductsBtn" data-id="${activity.paNo}" ${disabled}>選擇商品</button></td>
             </tr>`;
                     $('#promotionActivitiesTable tbody').append(row);
                 });
@@ -226,6 +227,7 @@ $(document).ready(function () {
 
     $('#promotionActivitiesTable').on('click', '.selectProductsBtn', function () {
         var promoId = $(this).data('id');
+
         $('#selectProductsModal').data('promoId', promoId);
         $('#selectProductsModal').modal('show');
     });
