@@ -267,11 +267,12 @@ $(document).ready(function () {
         });
     }
 
-    // 當用戶取消選擇商品時的處理
+    let selectedProducts = {}; // 儲存商品選擇狀態
+    // 當用戶勾選或取消勾選商品時的事件處理
     $('#selectProductsModal #productsTableBody').on('change', '.product-checkbox', function () {
         var prodNo = $(this).val();
-        var promoId = $(this).is(':checked') ? $('#selectProductsModal').data('promoId') : null;
-        updateProductPromoId(prodNo, promoId);
+        var isChecked = $(this).is(':checked');
+        selectedProducts[prodNo] = isChecked;
     });
 
     $('#promotionActivitiesTable').on('click', '.selectProductsBtn', function () {
@@ -283,17 +284,16 @@ $(document).ready(function () {
 
     // 當用戶提交選擇的商品時的處理函數
     $('#saveSelectedProducts').on('click', function () {
-        var selectedProducts = $('#selectProductsModal .form-check-input:checked');
         var promoId = $('#selectProductsModal').data('promoId');
-
-        console.log("Selected promoId:", promoId);
-        selectedProducts.each(function () {
-            var prodNo = $(this).val();
-            updateProductPromoId(prodNo, promoId); // 使用外部獲取的 promoId
-        });
-
+        for (var prodNo in selectedProducts) {
+            if (selectedProducts.hasOwnProperty(prodNo)) {
+                updateProductPromoId(prodNo, selectedProducts[prodNo] ? promoId : null);
+            }
+        }
         $('#selectProductsModal').modal('hide');
+        selectedProducts = {}; // 重置 selectedProducts
     });
+
 
 
     // 在打開模態框時加載商品列表
