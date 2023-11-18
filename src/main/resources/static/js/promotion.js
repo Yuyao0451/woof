@@ -42,6 +42,7 @@ $(document).ready(function () {
             loadPromotionActivities(currentPage, pageSize);
         }
     });
+
     function loadPromotionActivities(page = 0, size = 10) {
         $.get(`/promotion?page=${page}&size=${size}`, function (response) {
             totalPage = response.totalPages;
@@ -185,18 +186,24 @@ $(document).ready(function () {
         return isValid;
     }
 
+    let productTotalPage = 0;
+    let productCurrentPage = 0;
+    const productPageSize = 5;
+
     // 加載商品列表
-    function loadProducts() {
-        // console.log('loadProducts function is called');
-        $.get('/products', function (products) {
-            // console.log('AJAX response:', products);
+    function loadProducts(page = 0, promoId) {
+        $.get(`/productsPaged?page=${page}&size=${productPageSize}`, function (response) {
+            productTotalPage = response.totalPages;
+            productCurrentPage = response.number;
+
             var productsTableBody = $('#selectProductsModal #productsTableBody');
             productsTableBody.empty();
 
-            products.forEach(function (product) {
+            response.content.forEach(function (product) {
+                var isChecked = product.promoId === promoId;
                 var productRow = `
                 <tr>
-                    <td><input type="checkbox" class="form-check-input" value="${product.prodNo}" id="product-${product.prodNo}"></td>
+                    <td><input type="checkbox" class="form-check-input product-checkbox" value="${product.prodNo}" ${isChecked ? 'checked' : ''} id="product-${product.prodNo}"></td>
                     <td>${product.prodNo}</td>
                     <td><img src="/productImage/${product.prodNo}" alt="Product Photo" style="width: 100px; height: 100px;"></td>
                     <td>${product.prodName}</td>
@@ -204,12 +211,39 @@ $(document).ready(function () {
             `;
                 productsTableBody.append(productRow);
             });
+
+            updatePaginationControls(productTotalPage, productCurrentPage);
         });
     }
 
+    function updatePaginationControls(totalPages, currentPage) {
+        var paginationContainer = $('#productPagination');
+        paginationContainer.empty();
+
+        // 添加「上一頁」按鈕
+        paginationContainer.append(`<li class="page-item ${currentPage === 0 ? 'disabled' : ''}"><a class="page-link" href="#" data-page="${currentPage - 1}">上一頁</a></li>`);
+
+        // 根據頁數添加按鈕
+        for (let i = 0; i < totalPages; i++) {
+            paginationContainer.append(`<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" data-page="${i}">${i + 1}</a></li>`);
+        }
+
+        // 添加「下一頁」按鈕
+        paginationContainer.append(`<li class="page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}"><a class="page-link" href="#" data-page="${currentPage + 1}">下一頁</a></li>`);
+    }
+
+
+    //分頁按鈕處理
+    $('#productPagination').on('click', '.page-link', function (e) {
+        e.preventDefault();
+        var newPage = $(this).data('page');
+        var promoId = $('#selectProductsModal').data('promoId'); // 獲取當前促銷活動的 promoId
+        loadProducts(newPage, promoId);
+    });
+
     // 更新商品的促銷活動ID
     function updateProductPromoId(prodNo, promoId) {
-        var data = { promoId: promoId };
+        var data = {promoId: promoId};
         $.ajax({
             url: '/updateProduct/' + prodNo,
             method: 'PUT',
@@ -217,6 +251,10 @@ $(document).ready(function () {
             data: $.param(data),
             success: function (response) {
                 console.log('Product updated', response);
+                if (promoId === null) {
+                    // 重新加載商品列表以更新狀態
+                    loadProducts(productCurrentPage);
+                }
             },
             error: function (xhr, status, error) {
                 console.log('Update error', status, error);
@@ -224,6 +262,12 @@ $(document).ready(function () {
         });
     }
 
+    // 當用戶取消選擇商品時的處理
+    $('#selectProductsModal #productsTableBody').on('change', '.product-checkbox', function () {
+        var prodNo = $(this).val();
+        var promoId = $(this).is(':checked') ? $('#selectProductsModal').data('promoId') : null;
+        updateProductPromoId(prodNo, promoId);
+    });
 
     $('#promotionActivitiesTable').on('click', '.selectProductsBtn', function () {
         var promoId = $(this).data('id');
@@ -249,8 +293,8 @@ $(document).ready(function () {
 
     // 在打開模態框時加載商品列表
     $('#selectProductsModal').on('show.bs.modal', function () {
-        // console.log('Modal is shown');
-        loadProducts();
+        var promoId = $(this).data('promoId'); // 獲取當前促銷活動的 promoId
+        loadProducts(0, promoId); // 加載第一頁
     });
 
 });
