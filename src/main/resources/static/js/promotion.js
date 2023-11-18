@@ -110,9 +110,26 @@ $(document).ready(function () {
             success: function (response) {
                 $('#promotionModal').modal('hide');
                 loadPromotionActivities();
+                if (!activity.paStatus) { // 如果活動狀態為下架
+                    resetPromotionProducts(id);
+                }
             }
         });
     }
+
+    function resetPromotionProducts(promoId) {
+        $.ajax({
+            url: '/resetPromoId',
+            method: 'PUT',
+            success: function () {
+                console.log('Promotion products reset for promoId: ' + promoId);
+            },
+            error: function (xhr, status, error) {
+                console.log('Error resetting promotion products: ' + error);
+            }
+        });
+    }
+
 
     function createPromotionActivity(activity) {
         $.ajax({

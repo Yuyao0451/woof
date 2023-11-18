@@ -104,6 +104,17 @@ public class ProductController {
         return new ResponseEntity<>(promotionProducts, HttpStatus.OK);
     }
 
+    @PutMapping("/resetPromoId")
+    public ResponseEntity<Void> resetPromotionForAllProducts() {
+        try {
+            service.resetPromoId();
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @GetMapping("/productById/{prodNo}")
     public ResponseEntity<ProductDto> findProductById(@PathVariable int prodNo) {
         ProductDto productDto = service.getProductById(prodNo);

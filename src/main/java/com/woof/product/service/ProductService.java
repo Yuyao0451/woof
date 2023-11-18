@@ -83,6 +83,14 @@ public class ProductService {
         return dto;
     }
 
+    public void resetPromoId() {
+        List<Product> products = repository.findAll();
+        for (Product product : products) {
+            product.setPromoId(null);
+            repository.save(product);
+        }
+    }
+
 
     //使用displayname獲得enum值
     private ProductCategory getCategoryByName(String displayName) {
