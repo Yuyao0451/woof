@@ -11,8 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -55,7 +53,8 @@ public class ProductController {
             @RequestParam(value = "prodName", required = false) String prodName,
             @RequestParam(value = "prodStatus", required = false) String prodStatus,
             @RequestParam(value = "prodPhoto", required = false) MultipartFile prodPhoto,
-            @RequestParam(value = "promoId", required = false) Integer promoId) {
+            @RequestParam(value = "promoId", required = false) Integer promoId,
+            @RequestParam(value = "updatePromoId", required = false, defaultValue = "false") boolean updatePromoId) {
 
         // 從資料庫中獲取現有商品資料
         ProductDto existingProductDto = service.getProductById(prodNo);
@@ -70,7 +69,9 @@ public class ProductController {
         if (prodPrice != null) existingProductDto.setProdPrice(prodPrice);
         if (prodName != null) existingProductDto.setProdName(prodName);
         if (prodStatus != null) existingProductDto.setProdStatus(prodStatus);
-        if (promoId != null) existingProductDto.setPromoId(promoId);
+        if (updatePromoId) {
+            existingProductDto.setPromoId(promoId);
+        }
 
         // 處理照片更新
         if (prodPhoto != null && !prodPhoto.isEmpty()) {

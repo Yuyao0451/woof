@@ -243,7 +243,10 @@ $(document).ready(function () {
 
     // 更新商品的促銷活動ID
     function updateProductPromoId(prodNo, promoId) {
-        var data = {promoId: promoId};
+        var data = {
+        promoId: promoId,
+        updatePromoId: true
+    };
         $.ajax({
             url: '/updateProduct/' + prodNo,
             method: 'PUT',
@@ -251,9 +254,11 @@ $(document).ready(function () {
             data: $.param(data),
             success: function (response) {
                 console.log('Product updated', response);
-                if (promoId === null) {
-                    // 重新加載商品列表以更新狀態
-                    loadProducts(productCurrentPage);
+                // 如果 promoId 為 null，則不需要重新加載整個商品列表
+                // 只有在添加商品到促銷活動時才重新加載
+                if (promoId !== null) {
+                    var currentPage = $('#selectProductsModal').data('currentPage') || 0;
+                    loadProducts(currentPage, $('#selectProductsModal').data('promoId'));
                 }
             },
             error: function (xhr, status, error) {
