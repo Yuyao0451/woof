@@ -57,45 +57,47 @@ function bindEditProductModalEvents() {
         });
 
         // 處理更新商品表單的提交
-        document.getElementById('updateProduct').addEventListener('click', function () {
-            var form = document.getElementById('editProductForm');
-            if (form.checkValidity()) {
-                var formData = new FormData(form);
-                var prodNo = document.getElementById('editProductId').value;
-                console.log('Updating product number:', prodNo);
-                formData.set('prodCatName', document.getElementById('editProductCategory').value);
-                formData.set('prodContent', document.getElementById('editProductDescription').value);
-                formData.set('prodPrice', document.getElementById('editProductPrice').value);
-                formData.set('prodName', document.getElementById('editProductName').value);
-                formData.set('prodStatus', document.getElementById('editProductStatus').value);
+        document.body.addEventListener('click', function (e) {
+            if (e.target && e.target.id === 'updateProduct') {
+                var form = document.getElementById('editProductForm');
+                if (form.checkValidity()) {
+                    var formData = new FormData(form);
+                    var prodNo = document.getElementById('editProductId').value;
+                    console.log('Updating product number:', prodNo);
+                    formData.set('prodCatName', document.getElementById('editProductCategory').value);
+                    formData.set('prodContent', document.getElementById('editProductDescription').value);
+                    formData.set('prodPrice', document.getElementById('editProductPrice').value);
+                    formData.set('prodName', document.getElementById('editProductName').value);
+                    formData.set('prodStatus', document.getElementById('editProductStatus').value);
 
-                var productImageFile = document.getElementById('editProductImage').files[0];
-                if (productImageFile) {
-                    formData.set('prodPhoto', productImageFile);
+                    var productImageFile = document.getElementById('editProductImage').files[0];
+                    if (productImageFile) {
+                        formData.set('prodPhoto', productImageFile);
+                    }
+
+                    fetch(`/updateProduct/${prodNo}`, {
+                        method: 'PUT',
+                        body: formData
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                return response.json().then(error => Promise.reject(error));
+                            }
+                        })
+                        .then(data => {
+                            console.log('Product updated:', data);
+                            $('#editProductModal').modal('hide');
+                            // 更新商品列表
+                            // updateProductList();
+                        })
+                        .catch(error => {
+                            console.error('Error updating product:', error);
+                        });
+                } else {
+                    form.classList.add('was-validated');
                 }
-
-                fetch(`/updateProduct/${prodNo}`, {
-                    method: 'PUT',
-                    body: formData
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        } else {
-                            return response.json().then(error => Promise.reject(error));
-                        }
-                    })
-                    .then(data => {
-                        console.log('Product updated:', data);
-                        $('#editProductModal').modal('hide');
-                        // 更新商品列表
-                        // updateProductList();
-                    })
-                    .catch(error => {
-                        console.error('Error updating product:', error);
-                    });
-            } else {
-                form.classList.add('was-validated');
             }
         });
         isEditProductEventBound = true;

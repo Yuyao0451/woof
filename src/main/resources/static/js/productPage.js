@@ -1,6 +1,44 @@
+// 定義全域變數
+const rowsPerPage = 5; // 每頁顯示的行數
+let currentPage = 1; // 當前頁碼
+
 document.addEventListener('DOMContentLoaded', function () {
-    // 呼叫函數以加載最新的產品數據並更新表格
+    // 初始化產品數據表格
     fetchProductsAndUpdateTable();
+
+    // 為上架和下架按鈕添加事件監聽器
+    document.getElementById("activateProduct").addEventListener("click", function () {
+        toggleProductStatus(1); // 上架的狀態代碼
+    });
+
+    document.getElementById("deactivateProduct").addEventListener("click", function () {
+        toggleProductStatus(0); // 下架的狀態代碼
+    });
+
+    // 為全選復選框添加事件監聽器
+    const selectAllCheckbox = document.getElementById("selectAll");
+    selectAllCheckbox.addEventListener("click", function () {
+        const checkboxes = document.querySelectorAll(".product-checkbox");
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    });
+
+    // 為分頁控制項添加事件監聽器
+    document.getElementById('prevPage').addEventListener('click', function () {
+        if (currentPage > 1) {
+            currentPage--;
+            updateTable();
+        }
+    });
+
+    document.getElementById('nextPage').addEventListener('click', function () {
+        const totalPages = Math.ceil(document.querySelectorAll('.product-row').length / rowsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            updateTable();
+        }
+    });
 });
 
 function fetchProductsAndUpdateTable() {
@@ -34,24 +72,54 @@ function createProductRow(product) {
     return row;
 }
 
-// 定義更新產品行的函數
 function updateProductRow(productDto) {
     console.log("Updating row for product:", productDto);
-    // 獲取所有的產品行元素
     let rows = document.querySelectorAll('.product-row');
-    // 遍歷每一行，尋找與產品編號匹配的行
     rows.forEach(row => {
-        // 獲取產品編號單元格
         let prodNoCell = row.querySelector('td:nth-child(2)');
         if (prodNoCell && prodNoCell.textContent == productDto.prodNo) {
-            // 獲取狀態單元格
             let statusCell = row.querySelector('td:nth-child(8)');
             if (statusCell) {
-                // 更新狀態單元格的內容
                 statusCell.textContent = productDto.prodStatus;
-                // 根據產品狀態更新單元格，以改變顯示顏色
                 statusCell.className = productDto.prodStatus === '銷售中' ? 'text-success' : 'text-danger';
             }
         }
     });
+}
+
+function toggleProductStatus(status) {
+    let selectedProdNos = getSelectedProdNos();
+    selectedProdNos.forEach(prodNo => {
+        fetch(`/toggleStatus/${prodNo}`, {
+            method: 'PUT'
+        }).then(response => response.json())
+            .then(data => {
+                console.log("Received product status:", data.prodStatus);
+                updateProductRow(data);
+            });
+    });
+}
+
+function getSelectedProdNos() {
+    let selectedProdNos = [];
+    let checkboxes = document.querySelectorAll('.product-checkbox');
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            selectedProdNos.push(checkbox.value);
+        }
+    });
+    return selectedProdNos;
+}
+
+function updateTable() {
+    const tableRows = document.querySelectorAll('.product-row');
+    const totalPages = Math.ceil(tableRows.length / rowsPerPage);
+    tableRows.forEach(row => row.style.display = 'none');
+    for (let i = (currentPage - 1) * rowsPerPage; i < currentPage * rowsPerPage; i++) {
+        if (tableRows[i]) {
+            tableRows[i].style.display = '';
+        }
+    }
+    document.getElementById('currentPage').textContent = currentPage;
+    document.getElementById('totalPages').textContent = totalPages;
 }
