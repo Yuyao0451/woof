@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (response.ok) {
                             return response.json();
                         } else {
-                            // 如果服務器響應不是 ok，拋出錯誤
                             return response.json().then(error => Promise.reject(error));
                         }
                     })
@@ -74,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 // 隱藏模態框
                 $('#addProductModal').modal('hide');
             } else {
-                // 如果表單不合法，顯示錯誤信息
                 form.classList.add('was-validated');
             }
         });
@@ -85,12 +83,10 @@ document.addEventListener('DOMContentLoaded', function () {
         let totalProducts = document.querySelectorAll('.product-row').length + 1; // 加上新產品
         // 計算總頁數
         let totalPages = Math.ceil(totalProducts / rowsPerPage);
-        // 返回新產品所在的頁碼
         return totalPages;
     }
 
     function highlightNewRow(prodNo) {
-        // 滾動到新行（如果在當前頁）
         let newRow = document.querySelector(`tr[data-prodno='${prodNo}']`);
         if (newRow) {
             newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });

@@ -35,11 +35,9 @@ function bindEditProductModalEvents() {
                             statusSelect.add(option);
                         });
 
-                        // 選擇與商品匹配的類別和狀態
                         categorySelect.value = product.prodCatName;
                         statusSelect.value = product.prodStatus;
 
-                        // 填充其他表單字段
                         document.getElementById('editProductId').value = product.prodNo;
                         document.getElementById('editProductName').value = product.prodName;
                         document.getElementById('editProductPrice').value = product.prodPrice;
@@ -93,7 +91,6 @@ function bindEditProductModalEvents() {
                                 let newPage = calculatePageForProduct(data.prodNo);
                                 // 更新當前頁碼
                                 currentPage = newPage;
-                                // 更新表格
                                 updateTable();
                                 // 應用特效
                                 highlightUpdatedRow(data.prodNo);
@@ -117,14 +114,12 @@ function bindEditProductModalEvents() {
 function calculatePageForProduct(prodNo) {
     // 獲取所有商品行
     let allRows = document.querySelectorAll('.product-row');
-    // 找出該商品在所有行中的索引
     let index = Array.from(allRows).findIndex(row => row.getAttribute('data-prodno') == prodNo);
     // 計算該商品應該出現在哪一頁
     return Math.ceil((index + 1) / rowsPerPage);
 }
 
 function highlightUpdatedRow(prodNo) {
-    // 延時確保DOM已更新
     setTimeout(() => {
         let updatedRow = document.querySelector(`tr[data-prodno='${prodNo}']`);
         if (updatedRow) {
