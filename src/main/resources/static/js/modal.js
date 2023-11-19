@@ -89,6 +89,14 @@ document.addEventListener('DOMContentLoaded', function () {
         return totalPages;
     }
 
+    function highlightNewRow(prodNo) {
+        // 滾動到新行（如果在當前頁）
+        let newRow = document.querySelector(`tr[data-prodno='${prodNo}']`);
+        if (newRow) {
+            newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            newRow.classList.add('highlighted-row');
+        }
+    }
     // 當新增產品按鈕被點擊時，顯示模態框並綁定事件
     document.getElementById('addProduct').addEventListener('click', function () {
         $('#addProductModal').modal('show');

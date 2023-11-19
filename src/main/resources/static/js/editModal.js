@@ -88,16 +88,16 @@ function bindEditProductModalEvents() {
                         })
                         .then(data => {
                             console.log('Product updated:', data);
-                            // 更新表格中的商品信息
-                            updateProductRow(data);
-                            // 獲取被更新的行
-                            let updatedRow = document.querySelector(`tr[data-prodno='${data.prodNo}']`);
-                            if(updatedRow) {
-                                // 滾動到該行
-                                updatedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                // 添加視覺特效
-                                updatedRow.classList.add('highlighted-row');
-                            }
+                            fetchProductsAndUpdateTable(() => {
+                                // 計算修改後的商品應該出現在哪一頁
+                                let newPage = calculatePageForProduct(data.prodNo);
+                                // 更新當前頁碼
+                                currentPage = newPage;
+                                // 更新表格
+                                updateTable();
+                                // 應用特效
+                                highlightUpdatedRow(data.prodNo);
+                            });
                             $('#editProductModal').modal('hide');
                             // 更新商品列表
                             // updateProductList();
@@ -114,6 +114,25 @@ function bindEditProductModalEvents() {
     }
 }
 
+function calculatePageForProduct(prodNo) {
+    // 獲取所有商品行
+    let allRows = document.querySelectorAll('.product-row');
+    // 找出該商品在所有行中的索引
+    let index = Array.from(allRows).findIndex(row => row.getAttribute('data-prodno') == prodNo);
+    // 計算該商品應該出現在哪一頁
+    return Math.ceil((index + 1) / rowsPerPage);
+}
+
+function highlightUpdatedRow(prodNo) {
+    // 延時確保DOM已更新
+    setTimeout(() => {
+        let updatedRow = document.querySelector(`tr[data-prodno='${prodNo}']`);
+        if (updatedRow) {
+            updatedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            updatedRow.classList.add('highlighted-row');
+        }
+    }, 100); // 延時100毫秒
+}
 // 當文檔加載完成後，加載修改商品模態框並綁定事件
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/editModal.html')

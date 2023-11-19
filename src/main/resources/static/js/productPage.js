@@ -87,17 +87,13 @@ function updateProductRow(productDto) {
                 statusCell.textContent = productDto.prodStatus;
                 statusCell.className = productDto.prodStatus === '銷售中' ? 'text-success' : 'text-danger';
             }
+            // 更新照片
+            let imgElement = row.querySelector('td:nth-child(3) img');
+            if (imgElement) {
+                imgElement.src = `/productImage/${productDto.prodNo}?t=${new Date().getTime()}`;
+            }
         }
     });
-}
-
-function highlightNewRow(prodNo) {
-    // 滾動到新行（如果在當前頁）
-    let newRow = document.querySelector(`tr[data-prodno='${prodNo}']`);
-    if (newRow) {
-        newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        newRow.classList.add('highlighted-row');
-    }
 }
 
 function toggleProductStatus(status) {
