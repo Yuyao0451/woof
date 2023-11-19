@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-function fetchProductsAndUpdateTable() {
+function fetchProductsAndUpdateTable(callback) {
     fetch('/products')
         .then(response => response.json())
         .then(products => {
@@ -53,12 +53,16 @@ function fetchProductsAndUpdateTable() {
             });
             // 數據更新後重新計算分頁
             updateTable();
+            if(callback) {
+                callback();
+            }
         });
 }
 
 function createProductRow(product) {
     const row = document.createElement('tr');
     row.classList.add('product-row');
+    row.setAttribute('data-prodno', product.prodNo);
     row.innerHTML = `
         <td><input type="checkbox" value="${product.prodNo}" class="product-checkbox"></td>
         <td>${product.prodNo}</td>
@@ -85,6 +89,15 @@ function updateProductRow(productDto) {
             }
         }
     });
+}
+
+function highlightNewRow(prodNo) {
+    // 滾動到新行（如果在當前頁）
+    let newRow = document.querySelector(`tr[data-prodno='${prodNo}']`);
+    if (newRow) {
+        newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        newRow.classList.add('highlighted-row');
+    }
 }
 
 function toggleProductStatus(status) {

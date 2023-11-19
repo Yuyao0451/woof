@@ -38,3 +38,12 @@ table th, table td {
 table thead th {
     background-color: #f3e9e9;
 }
+
+.highlighted-row {
+    animation: highlight-animation 2s ease;
+}
+
+@keyframes highlight-animation {
+    0% { background-color: #ffff99; }
+    100% { background-color: transparent; }
+}

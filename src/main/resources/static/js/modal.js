@@ -54,6 +54,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     })
                     .then(data => {
                         console.log('Product added:', data);
+                        // 重新加載商品並更新分頁
+                        fetchProductsAndUpdateTable(() => {
+                            // 判斷新商品應該出現在哪一頁
+                            let newPage = calculateNewPage(data);
+                            // 更新當前頁碼
+                            currentPage = newPage;
+                            // 更新表格
+                            updateTable();
+                            setTimeout(() => {
+                                highlightNewRow(data.prodNo);
+                            }, 100); // 延時100毫秒
+                        });
                     })
                     .catch(error => {
                         console.error('There has been a problem with your fetch operation:', error);
@@ -66,6 +78,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 form.classList.add('was-validated');
             }
         });
+    }
+
+    function calculateNewPage(newProduct) {
+        // 獲取總產品數量
+        let totalProducts = document.querySelectorAll('.product-row').length + 1; // 加上新產品
+        // 計算總頁數
+        let totalPages = Math.ceil(totalProducts / rowsPerPage);
+        // 返回新產品所在的頁碼
+        return totalPages;
     }
 
     // 當新增產品按鈕被點擊時，顯示模態框並綁定事件

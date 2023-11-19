@@ -88,6 +88,16 @@ function bindEditProductModalEvents() {
                         })
                         .then(data => {
                             console.log('Product updated:', data);
+                            // 更新表格中的商品信息
+                            updateProductRow(data);
+                            // 獲取被更新的行
+                            let updatedRow = document.querySelector(`tr[data-prodno='${data.prodNo}']`);
+                            if(updatedRow) {
+                                // 滾動到該行
+                                updatedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                // 添加視覺特效
+                                updatedRow.classList.add('highlighted-row');
+                            }
                             $('#editProductModal').modal('hide');
                             // 更新商品列表
                             // updateProductList();
