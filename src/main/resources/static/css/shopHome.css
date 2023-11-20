@@ -102,3 +102,17 @@
     color: #0056b3; /* 懸停時的顏色 */
     cursor: pointer; /* 改變鼠標樣式 */
 }
+
+#promotionCarousel .carousel-control-prev,
+#promotionCarousel .carousel-control-next {
+    top: 50%; /* 設定垂直中心位置 */
+    transform: translateY(-50%); /* 向上平移以確保準確居中 */
+}
+
+#promotionCarousel .carousel-control-prev {
+    left: -30px; /* 將左箭頭向左偏移 */
+}
+
+#promotionCarousel .carousel-control-next {
+    right: -30px; /* 將右箭頭向右偏移 */
+}

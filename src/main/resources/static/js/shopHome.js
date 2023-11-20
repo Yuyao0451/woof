@@ -77,7 +77,7 @@ $(document).ready(function() {
     loadProducts('all');
     // 加載促銷商品
     loadPromotionProducts();
-    $('#products-row').on('click', '.view-details', function() {
+    $(document).on('click', '.view-details', function() {
         var prodNo = $(this).data('prodno');
         window.location.href = `/productDetail.html?prodNo=${prodNo}`;
     });
