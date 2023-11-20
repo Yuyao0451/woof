@@ -11,31 +11,39 @@
 <body>
 
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-md-3">
-            <!-- 側邊欄開始 -->
-            <div class="list-group" id="category-list">
-                <a href="#" class="list-group-item list-group-item-action active" data-category="all">全部</a>
-            </div>
-            <!-- 側邊欄結束 -->
-        </div>
-        <div class="col-md-9">
-            <div class="row" id="products-row">
-                <!-- 商品卡片將被動態插入這裡 -->
-            </div>
-        </div>
-    </div>
     <!-- 促銷商品區塊 -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <h2>促銷商品</h2>
+    <div class="row">
+        <div class="col-md-2"></div> <!-- 左邊空白 -->
+        <div class="col-md-8">
             <div class="row" id="promotion-products-row">
                 <!-- 促銷商品卡片將被動態插入這裡 -->
             </div>
         </div>
+        <div class="col-md-2"></div> <!-- 右邊空白 -->
+    </div>
+
+    <!-- 商品類別區塊 -->
+    <div class="row">
+        <div class="col-md-2"></div> <!-- 左邊空白 -->
+        <div class="col-md-8">
+            <div class="row mt-4" id="category-row">
+                <!-- 類別圖標和名稱將動態插入 -->
+            </div>
+        </div>
+        <div class="col-md-2"></div> <!-- 右邊空白 -->
+    </div>
+
+    <!-- 普通商品區塊 -->
+    <div class="row">
+        <div class="col-md-2"></div> <!-- 左邊空白 -->
+        <div class="col-md-8">
+            <div class="row" id="products-row">
+                <!-- 商品卡片將被動態插入這裡 -->
+            </div>
+        </div>
+        <div class="col-md-2"></div> <!-- 右邊空白 -->
     </div>
 </div>
-
 
 <script src="js/shopHome.js"></script>
 <script src="js/cart.js"></script>

@@ -1,13 +1,17 @@
 
-.product-card {
-    transition: transform .2s; /* 添加過渡效果 */
+.card {
+    margin: 5px; /* 增加卡片之間的間隙 */
 }
-.product-card:hover {
-    transform: scale(1.05); /* 懸停時放大 */
+
+/* 促銷商品卡片 */
+#promotion-products-row .card {
+    border: 1px solid #ffcc00; /* 促銷商品特有的邊框顏色 */
+    background-color: #fffbe6; /* 促銷商品特有的背景顏色 */
 }
+
 .product-img {
     width: 100%; /* 讓圖片寬度自適應卡片 */
-    height: 200px; /* 固定圖片高度 */
+    height: 100px; /* 固定圖片高度 */
     object-fit: cover; /* 保持圖片的比例 */
 }
 .btn-custom {
@@ -19,4 +23,26 @@
 }
 .price-text {
     font-weight: bold; /* 價格文字加粗 */
+}
+
+.category-item {
+    transition: transform .2s, box-shadow .2s; /* 添加過渡效果 */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* 初始陰影效果 */
+    padding: 15px; /* 內邊距 */
+    margin: 10px; /* 邊距 */
+    border-radius: 5px; /* 邊框圓角 */
+    background-color: #f8f9fa; /* 初始背景顏色 */
+    text-align: center; /* 文字居中 */
+    cursor: pointer; /* 鼠標樣式 */
+}
+
+.category-item:hover {
+    transform: scale(1.05); /* 懸停時稍微放大 */
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3); /* 懸停時陰影效果加深 */
+    background-color: #e9ecef; /* 懸停時的背景顏色 */
+}
+
+.category-item:active {
+    transform: scale(0.95); /* 點擊時縮小 */
+    background-color: #dee2e6; /* 點擊時的背景顏色 */
 }
