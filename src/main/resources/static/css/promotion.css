@@ -54,6 +54,11 @@
     font-size: 0.8em;
 }
 
+#promotionActivitiesTable tr:hover {
+    background-color: #e0e0e0;
+    /*color: #5cbcef; !* 文字顏色變更 *!*/
+}
+
 @media screen and (max-width: 600px) {
     .container, .modal-content {
         width: 100%;

@@ -46,3 +46,7 @@
     transform: scale(0.95); /* 點擊時縮小 */
     background-color: #dee2e6; /* 點擊時的背景顏色 */
 }
+
+.gray-background {
+    background-color: #ededf6; /* 淺灰色背景 */
+}

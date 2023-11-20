@@ -43,6 +43,13 @@ table thead th {
     animation: highlight-animation 2s ease;
 }
 
+/* 當滑鼠移到某一行上時的樣式 */
+.product-row:hover {
+    background-color: #f0f0f0;
+    /*color: #5cbcef; !* 文字顏色變更 *!*/
+}
+
+
 @keyframes highlight-animation {
     0% { background-color: #ffff99; }
     100% { background-color: transparent; }
