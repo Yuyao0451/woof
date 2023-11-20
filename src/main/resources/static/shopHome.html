@@ -13,20 +13,21 @@
 <div class="container mt-4">
     <!-- 促銷商品區塊 -->
     <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-1 d-flex align-items-center justify-content-center">
-            <!-- 左箭頭 -->
-            <button id="promotion-prev" class="btn">＜</button>
-        </div>
+        <div class="col-md-2"></div>
         <div class="col-md-8 gray-background">
-            <!-- 促銷商品 -->
-            <div class="row" id="promotion-products-row"></div>
+            <h2>促銷商品</h2>
+            <!-- Carousel for Promotion Products -->
+            <div id="promotionCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner" id="promotion-products-row"></div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#promotionCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#promotionCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
         </div>
-        <div class="col-md-1 d-flex align-items-center justify-content-center">
-            <!-- 右箭頭 -->
-            <button id="promotion-next" class="btn">＞</button>
-        </div>
-        <div class="col-md-1"></div>
+        <div class="col-md-2"></div>
     </div>
 
     <!-- 商品類別區塊 -->

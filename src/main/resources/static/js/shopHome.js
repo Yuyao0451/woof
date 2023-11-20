@@ -1,15 +1,13 @@
-function loadProducts(category) {
+function loadProducts(category, page = 1) {
     var url = category === 'all' ? '/products' : `/productsByCategory/${category}`;
     $.ajax({
         url: url,
         type: 'GET',
         success: function(products) {
-            console.log(products);
             // 清空商品展示區域
             $('#products-row').empty();
             //已新增上架商品才能顯示
             products.forEach(function(product) {
-                console.log(product.prodName, product.promotion, product.prodStatus);
                 if (!product.promotion && product.prodStatus === '銷售中') {
                     var productCard = `
                     <div class="col-md-3">
@@ -45,8 +43,6 @@ function loadProducts(category) {
         }
     });
 }
-
-
 
 $(document).ready(function() {
     // 加載類別
@@ -104,33 +100,37 @@ function loadPromotionProducts() {
         url: '/promotionProducts',
         type: 'GET',
         success: function (products) {
-            if (products.length === 0) {
-                // 如果沒有促銷商品，隱藏促銷商品區塊
-                $('#promotion-products-row').hide();
-            } else {
-                // 顯示並加載促銷商品
-                $('#promotion-products-row').show().empty();
-                let forEach = products.forEach(function (product) {
-                    var productCard = `
-                    <div class="col-md-3">
-                        <div class="card mb-3 box-shadow">
-                            <img class="card-img-top product-img" src="/productImage/${product.prodNo}" alt="${product.prodName}">
-                            <div class="card-body">
-                                <p class="card-text">${product.prodName}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary view-details" data-prodno="${product.prodNo}">查看</button>
-<!--                                        <button type="button" class="btn btn-sm btn-outline-secondary add-to-cart" data-id="${product.prodNo}" data-name="${product.prodName}" data-price="${product.prodPrice}">加入購物車</button>-->
+            $('#promotion-products-row').empty();
+            if (products.length > 0) {
+                for (let i = 0; i < products.length; i += 4) {
+                    var isActive = i === 0 ? 'active' : '';
+                    var productCards = products.slice(i, i + 4).map(function(product) {
+                        return `
+                            <div class="col-md-3">
+                                <div class="card mb-3 box-shadow">
+                                    <img class="card-img-top product-img" src="/productImage/${product.prodNo}" alt="${product.prodName}">
+                                    <div class="card-body">
+                                        <p class="card-text">${product.prodName}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary view-details" data-prodno="${product.prodNo}">查看</button>
+                                            </div>
+                                            <small class="text-muted"><s>$${product.prodPrice}</s></small>
+                                            <small class="text-danger">$${product.promoPrice}</small>
+                                        </div>
                                     </div>
-                                    <small class="text-muted"><s>$${product.prodPrice}</s></small>
-                                    <small class="text-danger">$${product.promoPrice}</small> <!-- 顯示促銷價格 -->
                                 </div>
                             </div>
+                        `;
+                    }).join('');
+
+                    var carouselItem = `
+                        <div class="carousel-item ${isActive}">
+                            <div class="row">${productCards}</div>
                         </div>
-                    </div>
-                `;
-                    $('#promotion-products-row').append(productCard);
-                });
+                    `;
+                    $('#promotion-products-row').append(carouselItem);
+                }
             }
         }
     })
