@@ -1,0 +1,56 @@
+/* 基本樣式 */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* 容器佈局 */
+.container {
+    max-width: 1200px; /* 或根據您的需求調整 */
+}
+
+/* 商品圖片樣式 */
+#product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 按鈕樣式 */
+.btn {
+    margin-top: 10px;
+}
+
+/* 數量選擇器樣式 */
+#product-quantity {
+    width: 50px;
+    text-align: center;
+}
+
+/* 商品詳情文字樣式 */
+#product-description {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* 促銷資訊樣式 */
+#promo-details {
+    margin-top: 10px;
+    font-style: italic;
+    color: #007bff;
+}
+
+/* 原價和促銷價格樣式 */
+#product-original-price,
+#product-promo-price {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* 清除浮動 */
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
