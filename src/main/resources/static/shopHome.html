@@ -13,14 +13,20 @@
 <div class="container mt-4">
     <!-- 促銷商品區塊 -->
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8 gray-background">
-            <h2>促銷商品</h2>
-            <div class="row" id="promotion-products-row">
-                <!-- 促銷商品卡片將被動態插入這裡 -->
-            </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-1 d-flex align-items-center justify-content-center">
+            <!-- 左箭頭 -->
+            <button id="promotion-prev" class="btn">＜</button>
         </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-8 gray-background">
+            <!-- 促銷商品 -->
+            <div class="row" id="promotion-products-row"></div>
+        </div>
+        <div class="col-md-1 d-flex align-items-center justify-content-center">
+            <!-- 右箭頭 -->
+            <button id="promotion-next" class="btn">＞</button>
+        </div>
+        <div class="col-md-1"></div>
     </div>
 
     <!-- 商品類別區塊 -->
@@ -40,9 +46,12 @@
         <div class="col-md-2"></div>
         <div class="col-md-8 gray-background">
             <h2>普通商品</h2>
-            <div class="row" id="products-row">
-                <!-- 商品卡片將被動態插入這裡 -->
-            </div>
+            <!-- 普通商品 -->
+            <div class="row" id="products-row"></div>
+            <!-- 分頁控制 -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination" id="pagination"></ul>
+            </nav>
         </div>
         <div class="col-md-2"></div>
     </div>

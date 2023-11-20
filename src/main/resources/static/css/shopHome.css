@@ -1,52 +1,104 @@
-
 .card {
-    margin: 5px; /* 增加卡片之間的間隙 */
+    margin: 10px; /* 增加卡片之間的間隙 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* 增加陰影效果 */
 }
 
-/* 促銷商品卡片 */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* 確保卡片身體佔滿整個卡片高度 */
+}
+
+.card-text {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.card .btn-group {
+    width: 100%;
+    margin-top: auto; /* 確保按鈕組在卡片底部 */
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+    white-space: nowrap; /* 防止按鈕文本換行 */
+}
+
+/* 考慮在小屏幕上的顯示 */
+@media (max-width: 576px) {
+    .card-text {
+        font-size: 12px;
+    }
+
+    .btn-sm {
+        font-size: 10px;
+    }
+}
+
 #promotion-products-row .card {
-    border: 1px solid #ffcc00; /* 促銷商品特有的邊框顏色 */
-    background-color: #fffbe6; /* 促銷商品特有的背景顏色 */
+    border: 2px solid #ffcc00; /* 加粗促銷商品邊框 */
+    background-color: #fffbe6;
 }
 
 .product-img {
-    width: 100%; /* 讓圖片寬度自適應卡片 */
-    height: 100px; /* 固定圖片高度 */
-    object-fit: cover; /* 保持圖片的比例 */
+    width: 100%;
+    height: 100px; /* 增加圖片高度 */
+    object-fit: cover;
 }
+
 .btn-custom {
-    background-color: #007bff; /* 自定義按鈕顏色 */
+    background-color: #007bff;
     color: white;
 }
+
 .btn-custom:hover {
-    background-color: #0056b3; /* 懸停時的按鈕顏色 */
+    background-color: #0056b3;
 }
+
 .price-text {
-    font-weight: bold; /* 價格文字加粗 */
+    font-weight: bold;
 }
 
 .category-item {
-    transition: transform .2s, box-shadow .2s; /* 添加過渡效果 */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* 初始陰影效果 */
-    padding: 15px; /* 內邊距 */
-    margin: 10px; /* 邊距 */
-    border-radius: 5px; /* 邊框圓角 */
-    background-color: #f8f9fa; /* 初始背景顏色 */
-    text-align: center; /* 文字居中 */
-    cursor: pointer; /* 鼠標樣式 */
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 20px; /* 增加內邊距 */
+    margin: 15px; /* 增加邊距 */
+    border-radius: 10px; /* 圓角半徑增加 */
+    background-color: #f8f9fa;
+    text-align: center;
+    cursor: pointer;
 }
 
 .category-item:hover {
-    transform: scale(1.05); /* 懸停時稍微放大 */
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3); /* 懸停時陰影效果加深 */
-    background-color: #e9ecef; /* 懸停時的背景顏色 */
+    transform: scale(1.1); /* 放大比例增加 */
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
+    background-color: #e9ecef;
 }
 
 .category-item:active {
-    transform: scale(0.95); /* 點擊時縮小 */
-    background-color: #dee2e6; /* 點擊時的背景顏色 */
+    transform: scale(0.95);
+    background-color: #dee2e6;
 }
 
 .gray-background {
-    background-color: #ededf6; /* 淺灰色背景 */
+    background-color: #ededf6;
+}
+
+/* 新增箭頭樣式 */
+#promotion-prev, #promotion-next {
+    font-size: 24px; /* 增加字體大小 */
+    color: #007bff; /* 調整顏色 */
+    border: none; /* 移除邊框 */
+    background: transparent; /* 背景透明 */
+}
+
+#promotion-prev:hover, #promotion-next:hover {
+    color: #0056b3; /* 懸停時的顏色 */
+    cursor: pointer; /* 改變鼠標樣式 */
 }
