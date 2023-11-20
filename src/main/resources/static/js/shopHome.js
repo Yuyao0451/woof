@@ -6,9 +6,16 @@ function loadProducts(category, page = 1) {
         success: function(products) {
             // 清空商品展示區域
             $('#products-row').empty();
-            //已新增上架商品才能顯示
-            products.forEach(function(product) {
-                if (!product.promotion && product.prodStatus === '銷售中') {
+            var filteredProducts = products.filter(function(product) {
+                return (!product.promotion || product.promotion === false) && product.prodStatus === '銷售中';
+            });
+            // 分頁邏輯
+            var productsPerPage = 8;
+            var startIndex = (page - 1) * productsPerPage;
+            var endIndex = startIndex + productsPerPage;
+            var paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+            paginatedProducts.forEach(function(product){
                     var productCard = `
                     <div class="col-md-3">
                         <div class="card mb-3 box-shadow">
@@ -28,9 +35,9 @@ function loadProducts(category, page = 1) {
                 `;
                     // 將商品卡片插入到頁面中
                     $('#products-row').append(productCard);
-                }
             });
 
+            updatePaginationControls(filteredProducts.length, productsPerPage, page);
             // 綁定查看詳情按鈕的點擊事件
             $('#products-row').on('click', '.view-details', function() {
                 var prodNo = $(this).data('prodno');
@@ -42,6 +49,24 @@ function loadProducts(category, page = 1) {
             console.log('Error fetching products:', error);
         }
     });
+}
+
+function updatePaginationControls(totalProducts, productsPerPage, currentPage) {
+    var totalPages = Math.ceil(totalProducts / productsPerPage);
+    $('#pagination').empty();
+
+    // 上一頁按鈕
+    var prevPage = currentPage > 1 ? currentPage - 1 : 1;
+    $('#pagination').append(`<li class="page-item ${currentPage === 1 ? 'disabled' : ''}"><a class="page-link" href="javascript:void(0);" onclick="loadProducts('all', ${prevPage})">上一頁</a></li>`);
+
+    // 頁碼
+    for (var i = 1; i <= totalPages; i++) {
+        $('#pagination').append(`<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="javascript:void(0);" onclick="loadProducts('all', ${i})">${i}</a></li>`);
+    }
+
+    // 下一頁按鈕
+    var nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
+    $('#pagination').append(`<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}"><a class="page-link" href="javascript:void(0);" onclick="loadProducts('all', ${nextPage})">下一頁</a></li>`);
 }
 
 $(document).ready(function() {
