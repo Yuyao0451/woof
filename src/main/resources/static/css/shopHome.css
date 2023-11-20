@@ -116,3 +116,17 @@
 #promotionCarousel .carousel-control-next {
     right: -30px; /* 將右箭頭向右偏移 */
 }
+
+#productDetailModal .modal-footer button {
+    background-color: #007bff; /* 按鈕背景色 */
+    color: white; /* 按鈕文字顏色 */
+    border-radius: 5px; /* 圓角 */
+}
+
+@media (max-width: 768px) {
+    #productDetailModal .modal-dialog {
+        max-width: 100%; /* 在小屏幕設備上全屏顯示 */
+        margin: 0;
+        border-radius: 0; /* 移除圓角 */
+    }
+}

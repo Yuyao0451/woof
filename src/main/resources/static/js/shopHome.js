@@ -38,11 +38,6 @@ function loadProducts(category, page = 1) {
             });
 
             updatePaginationControls(filteredProducts.length, productsPerPage, page);
-            // 綁定查看詳情按鈕的點擊事件
-            $('#products-row').on('click', '.view-details', function() {
-                var prodNo = $(this).data('prodno');
-                window.location.href = `/productDetail.html?prodNo=${prodNo}`;
-            });
 
         },
         error: function(error) {
@@ -77,10 +72,19 @@ $(document).ready(function() {
     loadProducts('all');
     // 加載促銷商品
     loadPromotionProducts();
-    $(document).on('click', '.view-details', function() {
+    $(document).on('click', '.view-details', function(event) {
+        event.preventDefault(); // 阻止默認行為，這很重要
+
         var prodNo = $(this).data('prodno');
-        window.location.href = `/productDetail.html?prodNo=${prodNo}`;
+        var detailUrl = `/productDetail.html?prodNo=${prodNo}`;
+
+        // 更新 iframe 的 src 屬性
+        $('#productDetailIframe').attr('src', detailUrl);
+
+        // 顯示模態框
+        $('#productDetailModal').modal('show');
     });
+
 });
 
 function loadCategories() {
