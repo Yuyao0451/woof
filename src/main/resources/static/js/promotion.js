@@ -224,6 +224,7 @@ $(document).ready(function () {
                     <td>${product.prodNo}</td>
                     <td><img src="/productImage/${product.prodNo}" alt="Product Photo" style="width: 100px; height: 100px;"></td>
                     <td>${product.prodName}</td>
+                    <td class="${product.prodStatus === '銷售中' ? 'text-success' : 'text-danger'}">${product.prodStatus}</td>
                 </tr>
             `;
                 productsTableBody.append(productRow);
