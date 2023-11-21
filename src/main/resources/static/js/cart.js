@@ -35,10 +35,12 @@ $(document).on("click",".add-to-cart", function() {
     let prodNo = $(this).data("id");
     let prodName = $(this).data("name");
     let prodPrice = $(this).data("price");
+    let quantity = parseInt($('#product-quantity').val());
 
     console.log(prodNo);
     console.log(prodName);
     console.log(prodPrice);
+    console.log(quantity);
 
     $.ajax({
         type: "POST",
@@ -47,7 +49,8 @@ $(document).on("click",".add-to-cart", function() {
             action: "add",
             prodNo: prodNo,
             prodName: prodName,
-            prodPrice: prodPrice
+            prodPrice: prodPrice,
+            quantity: quantity
         },
         success: function(data) {
             console.log("AJAX call made");
