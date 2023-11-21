@@ -130,3 +130,10 @@
         border-radius: 0; /* 移除圓角 */
     }
 }
+
+body {
+    background-image: url('../image/背景.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
