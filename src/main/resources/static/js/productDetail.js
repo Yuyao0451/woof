@@ -35,7 +35,7 @@ $(document).ready(function() {
                 $('.add-to-cart').attr({
                     'data-id': product.prodNo,
                     'data-name': product.prodName,
-                    'data-price': product.promotion ? product.promoPrice : product.prodPrice
+                    'data-price': product.promotion ? product.promoPrice : product.prodPrice,
                 });
             },
             error: function(error) {
