@@ -95,9 +95,13 @@ $(document).ready(function() {
         $('#productDetailModal').modal('show');
     });
 
-    $('#searchButton').click(function() {
-        var searchQuery = $('#searchInput').val();
-        loadProducts('all', 1, searchQuery);
+    $('#searchInput').keypress(function(event) {
+        // 檢查是否按下了 Enter 鍵
+        if (event.which == 13) { // Enter 鍵的鍵碼
+            event.preventDefault(); // 阻止預設行為
+            var searchQuery = $('#searchInput').val();
+            loadProducts('all', 1, searchQuery);
+        }
     });
 });
 
