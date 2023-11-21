@@ -86,6 +86,10 @@ function bindEditProductModalEvents() {
                         })
                         .then(data => {
                             console.log('Product updated:', data);
+                            Swal.fire({
+                                icon: "success",
+                                title: "成功修改商品",
+                            });
                             fetchProductsAndUpdateTable(() => {
                                 // 計算修改後的商品應該出現在哪一頁
                                 let newPage = calculatePageForProduct(data.prodNo);

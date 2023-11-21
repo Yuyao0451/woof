@@ -53,6 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     })
                     .then(data => {
                         console.log('Product added:', data);
+                        Swal.fire({
+                            icon: "success",
+                            title: "成功新增商品",
+                        });
                         // 重新加載商品並更新分頁
                         fetchProductsAndUpdateTable(() => {
                             // 判斷新商品應該出現在哪一頁
