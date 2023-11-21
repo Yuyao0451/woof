@@ -113,6 +113,10 @@ $(document).ready(function () {
                 if (!activity.paStatus) { // 如果活動狀態為下架
                     resetPromotionProducts(id);
                 }
+                Swal.fire({
+                    icon: "success",
+                    title: "促銷活動已更新",
+                });
             }
         });
     }
@@ -140,6 +144,10 @@ $(document).ready(function () {
             success: function (response) {
                 $('#promotionModal').modal('hide');
                 loadPromotionActivities();
+                Swal.fire({
+                    icon: "success",
+                    title: "成功新增促銷活動",
+                });
             }
         });
     }
@@ -309,6 +317,10 @@ $(document).ready(function () {
             }
         }
         $('#selectProductsModal').modal('hide');
+        Swal.fire({
+            icon: "success",
+            title: "商品選擇已保存",
+        });
         selectedProducts = {}; // 重置 selectedProducts
     });
 
