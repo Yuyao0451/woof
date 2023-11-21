@@ -176,5 +176,12 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-
+    @GetMapping("/searchProducts")
+    public ResponseEntity<List<ProductDto>> searchProductsByName(@RequestParam String prodName) {
+        List<ProductDto> products = service.searchProductsByName(prodName);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 }

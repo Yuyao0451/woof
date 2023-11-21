@@ -179,4 +179,8 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public List<ProductDto> searchProductsByName(String prodName) {
+        List<Product> products = repository.findByProdNameContaining(prodName);
+        return products.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
 }

@@ -1,5 +1,10 @@
-function loadProducts(category, page = 1) {
-    var url = category === 'all' ? '/products' : `/productsByCategory/${category}`;
+function loadProducts(category, page = 1, searchQuery = null) {
+    var url = '';
+    if (searchQuery) {
+        url = `/searchProducts?prodName=${encodeURIComponent(searchQuery)}`;
+    } else {
+        url = category === 'all' ? '/products' : `/productsByCategory/${category}`;
+    }
     $.ajax({
         url: url,
         type: 'GET',
@@ -39,9 +44,13 @@ function loadProducts(category, page = 1) {
 
             updatePaginationControls(filteredProducts.length, productsPerPage, page);
 
+            if (products.length === 0) {
+                $('#products-row').html('<p>沒有找到相關商品。</p>');
+            }
         },
         error: function(error) {
             console.log('Error fetching products:', error);
+            $('#products-row').html('<p>商品加載失敗，請稍後再試。</p>');
         }
     });
 }
@@ -64,6 +73,7 @@ function updatePaginationControls(totalProducts, productsPerPage, currentPage) {
     $('#pagination').append(`<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}"><a class="page-link" href="javascript:void(0);" onclick="loadProducts('all', ${nextPage})">下一頁</a></li>`);
 }
 
+
 $(document).ready(function() {
     // 加載類別
     loadCategories();
@@ -85,6 +95,10 @@ $(document).ready(function() {
         $('#productDetailModal').modal('show');
     });
 
+    $('#searchButton').click(function() {
+        var searchQuery = $('#searchInput').val();
+        loadProducts('all', 1, searchQuery);
+    });
 });
 
 function loadCategories() {
@@ -164,4 +178,3 @@ function loadPromotionProducts() {
         }
     })
 }
-
