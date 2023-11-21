@@ -103,6 +103,12 @@ $(document).ready(function() {
             loadProducts('all', 1, searchQuery);
         }
     });
+
+    $('#categoryCollapse').on('show.bs.collapse', function () {
+        $('#arrowIcon').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+    }).on('hide.bs.collapse', function () {
+        $('#arrowIcon').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+    });
 });
 
 function loadCategories() {
