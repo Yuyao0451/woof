@@ -6,13 +6,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // 初始化產品數據表格
     fetchProductsAndUpdateTable();
 
-    // 為上架和下架按鈕添加事件監聽器
+    // 為上架按鈕添加事件監聽器
     document.getElementById("activateProduct").addEventListener("click", function () {
-        toggleProductStatus(1); // 上架的狀態代碼
+        toggleProductStatus(true);
     });
 
+    // 為下架按鈕添加事件監聽器
     document.getElementById("deactivateProduct").addEventListener("click", function () {
-        toggleProductStatus(0); // 下架的狀態代碼
+        toggleProductStatus(false);
     });
 
     // 為全選復選框添加事件監聽器
@@ -96,10 +97,10 @@ function updateProductRow(productDto) {
     });
 }
 
-function toggleProductStatus(status) {
+function toggleProductStatus(activate) {
     let selectedProdNos = getSelectedProdNos();
     selectedProdNos.forEach(prodNo => {
-        fetch(`/toggleStatus/${prodNo}`, {
+        fetch(`/toggleStatus/${prodNo}/${activate}`, {
             method: 'PUT'
         }).then(response => response.json())
             .then(data => {

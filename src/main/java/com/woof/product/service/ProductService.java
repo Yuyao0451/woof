@@ -150,20 +150,17 @@ public class ProductService {
         return products.map(this::convertToDto);
     }
 
-    public ProductDto toggleProductStatus(int prodNo) {
+    public ProductDto toggleProductStatus(int prodNo, boolean activate) {
         Optional<Product> productOptional = repository.findById(prodNo);
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
-            if (product.getProdStatus() == ProductStatus.ON_SHELF) {
-                product.setProdStatus(ProductStatus.OFF_SHELF);
-            } else {
-                product.setProdStatus(ProductStatus.ON_SHELF);
-            }
+            product.setProdStatus(activate ? ProductStatus.ON_SHELF : ProductStatus.OFF_SHELF);
             Product updatedProduct = repository.save(product);
             return convertToDto(updatedProduct);
         }
         return null;
     }
+
 
     public List<ProductDto> getProductsByCategory(String category) {
         ProductCategory productCategory = getCategoryByName(category);

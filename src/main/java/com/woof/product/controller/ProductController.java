@@ -158,9 +158,9 @@ public class ProductController {
     }
 
 
-    @PutMapping("/toggleStatus/{prodNo}")
-    public ResponseEntity<ProductDto> toggleProductStatus(@PathVariable int prodNo) {
-        ProductDto productDto = service.toggleProductStatus(prodNo);
+    @PutMapping("/toggleStatus/{prodNo}/{activate}")
+    public ResponseEntity<ProductDto> toggleProductStatus(@PathVariable int prodNo, @PathVariable boolean activate) {
+        ProductDto productDto = service.toggleProductStatus(prodNo, activate);
         if (productDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
