@@ -48,7 +48,9 @@ $(document).ready(function() {
     // 數量選擇器的事件綁定
     $('#increase-quantity').click(function() {
         var value = parseInt($('#product-quantity').val());
-        $('#product-quantity').val(value + 1);
+        if (value < 20) {
+            $('#product-quantity').val(value + 1);
+        }
     });
 
     $('#decrease-quantity').click(function() {
