@@ -67,7 +67,9 @@ function createProductRow(product) {
     row.innerHTML = `
         <td><input type="checkbox" value="${product.prodNo}" class="product-checkbox"></td>
         <td>${product.prodNo}</td>
-        <td><img src="/productImage/${product.prodNo}" alt="Product Photo" style="width: 100px; height: 100px;"></td>
+        <td><img src="/productImage/${product.prodNo}" 
+        onerror="this.onerror=null; this.src='/image/未有照片之圖片.png';"
+        alt="Product Photo" style="width: 100px; height: 100px;"></td>
         <td>${product.prodCatName}</td>
         <td>${product.prodName}</td>
         <td>${product.prodContent}</td>

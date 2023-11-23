@@ -27,19 +27,24 @@ public class ProductController {
             @RequestParam("prodPrice") Integer prodPrice,
             @RequestParam("prodName") String prodName,
             @RequestParam("prodStatus") String prodStatus,
-            @RequestParam("prodPhoto") MultipartFile prodPhoto){
+            @RequestParam(value = "prodPhoto", required = false) MultipartFile prodPhoto){
         ProductDto productDto = new ProductDto();
         productDto.setProdCatName(prodCatName);
         productDto.setProdContent(prodContent);
         productDto.setProdPrice(prodPrice);
         productDto.setProdName(prodName);
         productDto.setProdStatus(prodStatus);
-        try {
-            productDto.setProdPhoto(prodPhoto.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        if (prodPhoto != null && !prodPhoto.isEmpty()) {
+            try {
+                productDto.setProdPhoto(prodPhoto.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        } else {
+            productDto.setProdPhoto(null);
         }
+
         ProductDto savedProductDto = service.saveProduct(productDto);
         return new ResponseEntity<>(savedProductDto, HttpStatus.CREATED);
     }
