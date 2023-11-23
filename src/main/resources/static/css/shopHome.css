@@ -1,13 +1,33 @@
+/* 基本樣式和字體設定 */
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-image: url('../image/背景.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/* 促銷商品區塊背景色 */
+.gray-background {
+    background-color: #e0f2f1;
+    border: 2px solid black; /* 添加黑色邊框 */
+    border-radius: 10px; /* 圓角設定 */
+}
+
+/* 卡片樣式 */
 .card {
-    margin: 10px; /* 增加卡片之間的間隙 */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* 增加陰影效果 */
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .card-body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%; /* 確保卡片身體佔滿整個卡片高度 */
+    height: 100%;
 }
 
 .card-text {
@@ -20,16 +40,72 @@
 
 .card .btn-group {
     width: 100%;
-    margin-top: auto; /* 確保按鈕組在卡片底部 */
+    margin-top: auto;
 }
 
+/* 按鈕樣式 */
 .btn-sm {
     padding: 5px 10px;
     font-size: 12px;
-    white-space: nowrap; /* 防止按鈕文本換行 */
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border: none;
 }
 
-/* 考慮在小屏幕上的顯示 */
+/* 自定義按鈕樣式 */
+.btn-custom {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border: none;
+}
+
+.btn-custom:hover {
+    background-color: #0056b3;
+}
+
+/* 價格文字 */
+.price-text {
+    font-weight: bold;
+}
+
+/* 類別項目 */
+.category-item {
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 20px;
+    margin: 15px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    text-align: center;
+    cursor: pointer;
+}
+
+.category-item:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
+    background-color: #e9ecef;
+}
+
+.category-item:active {
+    transform: scale(0.95);
+    background-color: #dee2e6;
+}
+
+/* 促銷商品卡片風格 */
+#promotion-products-row .card {
+    border: 2px solid #ffcc00;
+    background-color: #fffbe6;
+}
+
+/* 商品圖片 */
+.product-img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+
+/* 響應式設計調整 */
 @media (max-width: 576px) {
     .card-text {
         font-size: 12px;
@@ -40,100 +116,53 @@
     }
 }
 
-#promotion-products-row .card {
-    border: 2px solid #ffcc00; /* 加粗促銷商品邊框 */
-    background-color: #fffbe6;
-}
-
-.product-img {
-    width: 100%;
-    height: 100px; /* 增加圖片高度 */
-    object-fit: cover;
-}
-
-.btn-custom {
-    background-color: #007bff;
-    color: white;
-}
-
-.btn-custom:hover {
-    background-color: #0056b3;
-}
-
-.price-text {
-    font-weight: bold;
-}
-
-.category-item {
-    transition: transform .2s, box-shadow .2s;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    padding: 20px; /* 增加內邊距 */
-    margin: 15px; /* 增加邊距 */
-    border-radius: 10px; /* 圓角半徑增加 */
-    background-color: #f8f9fa;
-    text-align: center;
-    cursor: pointer;
-}
-
-.category-item:hover {
-    transform: scale(1.1); /* 放大比例增加 */
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
-    background-color: #e9ecef;
-}
-
-.category-item:active {
-    transform: scale(0.95);
-    background-color: #dee2e6;
-}
-
-.gray-background {
-    background-color: #ededf6;
-}
-
-/* 新增箭頭樣式 */
+/* 箭頭樣式 */
 #promotion-prev, #promotion-next {
-    font-size: 24px; /* 增加字體大小 */
-    color: #007bff; /* 調整顏色 */
-    border: none; /* 移除邊框 */
-    background: transparent; /* 背景透明 */
+    font-size: 24px;
+    color: #007bff;
+    border: none;
+    background: transparent;
 }
 
 #promotion-prev:hover, #promotion-next:hover {
-    color: #0056b3; /* 懸停時的顏色 */
-    cursor: pointer; /* 改變鼠標樣式 */
+    color: #0056b3;
+    cursor: pointer;
 }
 
 #promotionCarousel .carousel-control-prev,
 #promotionCarousel .carousel-control-next {
-    top: 50%; /* 設定垂直中心位置 */
-    transform: translateY(-50%); /* 向上平移以確保準確居中 */
+    top: 40%;
+    transform: translateY(-40%);
 }
 
 #promotionCarousel .carousel-control-prev {
-    left: -30px; /* 將左箭頭向左偏移 */
+    left: -60px;
 }
 
 #promotionCarousel .carousel-control-next {
-    right: -30px; /* 將右箭頭向右偏移 */
+    right: -60px;
 }
 
+/* 產品詳情模態框樣式 */
 #productDetailModal .modal-footer button {
-    background-color: #007bff; /* 按鈕背景色 */
-    color: white; /* 按鈕文字顏色 */
-    border-radius: 5px; /* 圓角 */
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
 }
 
 @media (max-width: 768px) {
     #productDetailModal .modal-dialog {
-        max-width: 100%; /* 在小屏幕設備上全屏顯示 */
+        max-width: 100%;
         margin: 0;
-        border-radius: 0; /* 移除圓角 */
+        border-radius: 0;
     }
 }
 
-body {
-    background-image: url('../image/背景.png');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+/* 容器和行間距 */
+.container {
+    padding: 20px;
+}
+
+.row {
+    margin-bottom: 20px;
 }
