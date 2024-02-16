@@ -11,7 +11,7 @@
 	<groupId>com</groupId>
 	<artifactId>woof</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>woof</name>
 	<description>woof</description>
 	<properties>
@@ -26,7 +26,7 @@
 		<dependency><!-- ＠用途說明3: marked the embedded servlet container as provided -->
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
+<!--			<scope>provided</scope>-->
 		</dependency>
 		<dependency><!-- ＠用途說明4: test -->
 			<groupId>org.springframework.boot</groupId>
