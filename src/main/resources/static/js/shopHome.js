@@ -24,7 +24,7 @@ function loadProducts(category, page = 1, searchQuery = null) {
                     var productCard = `
                     <div class="col-md-3">
                         <div class="card mb-3 box-shadow">
-                            <img class="card-img-top product-img" src="/productImage/${product.prodNo}" 
+                            <img class="card-img-top product-img" src="/productImage/${product.prodPhoto}" 
                             onerror="this.onerror=null; this.src='/image/未有照片之圖片.png';"
                             alt="${product.prodName}">
                             <div class="card-body">
@@ -163,7 +163,7 @@ function loadPromotionProducts() {
                         return `
                             <div class="col-md-3">
                                 <div class="card mb-3 box-shadow">
-                                    <img class="card-img-top product-img" src="/productImage/${product.prodNo}" 
+                                    <img class="card-img-top product-img" src="/productImage/${product.prodPhoto}" 
                                     onerror="this.onerror=null; this.src='/image/未有照片之圖片.png';"
                                     alt="${product.prodName}">
                                     <div class="card-body">

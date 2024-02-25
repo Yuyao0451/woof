@@ -1,9 +1,10 @@
 package com.woof.product.controller;
 
-import com.woof.product.entity.Product;
 import com.woof.product.service.ProductDto;
 import com.woof.product.service.ProductService;
+import com.woof.product.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
+    @Autowired
+    private StorageService storageService;
+
     @PostMapping("/addProduct")
     public ResponseEntity<ProductDto> addProduct(
             @RequestParam("prodCatName") String prodCatName,
@@ -35,14 +39,13 @@ public class ProductController {
         productDto.setProdName(prodName);
         productDto.setProdStatus(prodStatus);
         if (prodPhoto != null && !prodPhoto.isEmpty()) {
+            String filename = null;
             try {
-                productDto.setProdPhoto(prodPhoto.getBytes());
+                filename = storageService.store(prodPhoto);
             } catch (IOException e) {
-                e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+                throw new RuntimeException(e);
             }
-        } else {
-            productDto.setProdPhoto(null);
+            productDto.setProdPhoto(filename);
         }
 
         ProductDto savedProductDto = service.saveProduct(productDto);
@@ -80,8 +83,10 @@ public class ProductController {
 
         // 處理照片更新
         if (prodPhoto != null && !prodPhoto.isEmpty()) {
+            String filename;
             try {
-                existingProductDto.setProdPhoto(prodPhoto.getBytes());
+                filename = storageService.store(prodPhoto);
+                existingProductDto.setProdPhoto(filename);
             } catch (IOException e) {
                 e.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -129,14 +134,11 @@ public class ProductController {
         return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
-    @GetMapping("/productImage/{prodNo}")
-    public ResponseEntity<byte[]> getProductImage(@PathVariable int prodNo) {
-        byte[] imageBytes = service.getProductImage(prodNo);
-        if (imageBytes != null) {
-            return ResponseEntity
-                    .ok()
-                    .contentType(MediaType.IMAGE_PNG) // 根據圖片實際類型設定
-                    .body(imageBytes);
+    @GetMapping("/productImage/{filename:.+}")
+    public ResponseEntity<Resource> getProductImage(@PathVariable String filename) {
+        Resource file = storageService.loadAsResource(filename);
+        if (file != null) {
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(file);
         } else {
             return ResponseEntity.notFound().build();
         }

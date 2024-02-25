@@ -39,9 +39,8 @@ public class Product implements Serializable {
 	@Enumerated(EnumType.ORDINAL)
 	private ProductStatus prodStatus;
 
-	@Lob
 	@Column(name="PROD_PHOTO") //商品照片
-	private byte[] prodPhoto;
+	private String prodPhoto;
 
 	@Column(name="PROMO_ID") // 用於存儲促銷活動ID
 	private Integer promoId;
@@ -94,11 +93,11 @@ public class Product implements Serializable {
 		this.prodStatus = prodStatus;
 	}
 
-	public byte[] getProdPhoto() {
+	public String getProdPhoto() {
 		return prodPhoto;
 	}
 
-	public void setProdPhoto(byte[] prodPhoto) {
+	public void setProdPhoto(String prodPhoto) {
 		this.prodPhoto = prodPhoto;
 	}
 

@@ -230,7 +230,7 @@ $(document).ready(function () {
                 <tr>
                     <td><input type="checkbox" class="form-check-input product-checkbox" value="${product.prodNo}" ${isChecked ? 'checked' : ''} id="product-${product.prodNo}"></td>
                     <td>${product.prodNo}</td>
-                    <td><img src="/productImage/${product.prodNo}" 
+                    <td><img src="/productImage/${product.prodPhoto}" 
                     onerror="this.onerror=null; this.src='/image/未有照片之圖片.png';"
                     alt="Product Photo" style="width: 100px; height: 100px;"></td>
                     <td>${product.prodName}</td>

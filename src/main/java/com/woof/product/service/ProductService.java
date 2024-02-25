@@ -28,8 +28,6 @@ public class ProductService {
 
     public ProductDto saveProduct(ProductDto productDto) {
         Product product = convertToEntity(productDto);
-        // 在這裡處理 prodPhoto 的二進制數據
-        product.setProdPhoto(productDto.getProdPhoto());
         Product savedProduct = repository.save(product);
         return convertToDto(savedProduct);
     }
@@ -118,12 +116,6 @@ public class ProductService {
         return convertToDto(updatedProduct);
     }
 
-    public byte[] getProductImage(int prodNo) {
-        return repository.findById(prodNo)
-                .map(Product::getProdPhoto)
-                .orElse(null);
-    }
-
 
     public List<String> getProductCategories() {
         return Arrays.stream(ProductCategory.values())
@@ -179,5 +171,11 @@ public class ProductService {
     public List<ProductDto> searchProductsByName(String prodName) {
         List<Product> products = repository.findByProdNameContaining(prodName);
         return products.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    public String getProductImage(int prodNo) {
+        return repository.findById(prodNo)
+                .map(Product::getProdPhoto)
+                .orElse(null);
     }
 }
