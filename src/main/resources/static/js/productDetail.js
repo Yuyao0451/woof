@@ -8,7 +8,7 @@ $(document).ready(function() {
             url: `/productById/${prodNo}`,
             type: 'GET',
             success: function(product) {
-                $('#product-image').attr('src', `/productImage/${product.prodPhoto}`)
+                $('#product-image').attr('src', `https://cha103-09.s3.ap-northeast-1.amazonaws.com/productImage/${product.prodPhoto}`)
                                    .attr('onerror', "this.onerror=null; this.src='/image/未有照片之圖片.png';");
                 $('#product-name').text(product.prodName);
                 $('#product-description').text(product.prodContent);
